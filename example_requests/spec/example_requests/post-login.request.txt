@@ -1,0 +1,6 @@
+POST /login HTTP/1.1
+Host: foo.example
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 39
+
+username=grillkorv&password=verys3cret!
