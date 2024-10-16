@@ -6,12 +6,22 @@
 class HTTPrequest
   def initialize(request)
     @request_arr = request.split("\n")
-  end
+    p @request_arr
+    @request_arr2 = @request_arr.map {|el| el.split(" ")}
 
-  def parser
     @hash = {method: nil, resource: nil, version: nil, headers: nil, params: nil}
 
-    @request_arr.map {|el| el.include?("GET")}
+    @hash[:method], @hash[:resource], @hash[:version] = @request_arr2[0]
+
+    #@hash[:headers] = Hash[@headers.map {|el| el.split(": ")}]
+
+    if !(request[(request.length-2..request.length-1)] == "\n") #if final 2 of request isn't newline
+      #@hash[:params] = Hash[@params.split("&").map {|el| el.split("=")}]
+    end
+
+    #get routes har params efter resource, efter ett & tecken utan mellanslag
+    #post routes har en newline mellan headers och params
+
   end
 
   def method
@@ -28,17 +38,19 @@ class HTTPrequest
 
   def headers
     @hash[:headers]
+    #Hash[@headers.map {|el| el.split(": ")}]
   end
 
   def params
     @hash[:params]
+    #Hash[@params.split("&").map {|el| el.split("=")}]
   end
 end
 
 
 input = "GET /examples HTTP/1.1\nHost: example.com\nUser-Agent: ExampleBrowser/1.0\nAccept-Encoding: gzip, deflate\nAccept: */*"
 get = HTTPrequest.new(input)
-p get.parser
+p get.headers
 
 
 # p request.method   #=> 'GET'
