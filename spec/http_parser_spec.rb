@@ -20,8 +20,25 @@ describe 'Request' do
 			_(@request.version).must_equal "HTTP/1.1"
 		end
 
-
 	end
 
+	describe 'adjective post-request' do
+
+		it 'parses the http method' do
+			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
+			_(@request.method).must_equal :post
+		end
+
+		it 'parses the resource' do
+			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
+			_(@request.resource).must_equal "/login"
+		end
+
+		it 'parses the version' do
+			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
+			_(@request.version).must_equal "HTTP/1.1"
+		end
+
+	end
 
 end
