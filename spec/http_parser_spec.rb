@@ -26,6 +26,12 @@ describe 'Request' do
 			_(@request.headers).must_equal @hash
 		end
 
+		it 'parses the params' do
+			@request = Request.new(File.read('./spec/example_requests/get-index.request.txt'))
+			@hash = {}
+			_(@request.params).must_equal @hash
+		end
+
 	end
 
 	describe 'adjective post-request' do
@@ -47,11 +53,14 @@ describe 'Request' do
 
 		it 'parses the headers' do
 			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
-
-
-
 			@hash = {Host: "foo.example", Content_Type: "application/x-www-form-urlencoded", Content_Length: "39"}
 			_(@request.headers).must_equal @hash
+		end
+
+		it 'parses the params' do
+			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
+			@hash = {username: "grillkorv", password: "verys3cret!"} #username=grillkorv&password=verys3cret!
+			_(@request.params).must_equal @hash
 		end
 
 	end

@@ -35,8 +35,15 @@ class Request
       raise "Invalid HTTP method"
     end
 
-    if @attributes[:params] != nil
+    if @attributes[:params] == nil
+        @attributes[:params] = {}
+    end
+
+    if @attributes[:params] != {}
       @attributes[:params] = @attributes[:params].split("&")
+      @attributes[:params] = @attributes[:params].map {|str| str.split("=")}
+      @attributes[:params] = @attributes[:params].each {|arr| arr[0] = arr[0].to_sym}
+      @attributes[:params] = @attributes[:params].to_h
     end
   end
 
@@ -64,15 +71,15 @@ class Request
 end
 
 def printer
-  r = Request.new("POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&password=verys3cret!")
+  #r = Request.new("POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&password=verys3cret!")
+  r = Request.new("GET / HTTP/1.1\nHost: developer.mozilla.org\nAccept-Language: fr")
   p r.method #==> :post
   p r.resource #==> "/login"
   p r.version #==> "HTTP/1.1"
-  p r.headers #==> [["Host:", "foo.example"], ["Content-Type:", "application/x-www-form-urlencoded"], ["Content-Length:", "39"]]
+  p r.headers #==> {:Host=>"foo.example", :Content_Type=>"application/x-www-form-urlencoded", :Content_Length=>"39"}
   p r.params #==> ["username=grillkorv", "password=verys3cret!"]
 end
 
 #printer()
 
-#headers to hash
 #params to hash
