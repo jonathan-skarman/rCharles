@@ -1,19 +1,33 @@
 class Request
   def initialize(request)
     @request_arr = (request.split("\n")).map {|el| el.split(" ")}
-    p @request_arr
-    @attributes = {method: nil, resource: nil, version: nil, headers: nil, params: nil}
+    #p @request_arr
+    @attributes = {method: nil, resource: nil, version: nil, headers: [], params: nil}
     @attributes[:method], @attributes[:resource], @attributes[:version] = @request_arr[0]
+    init_method()
+    init_headers()
     init_params()
   end
 
+  def init_method
+    @attributes[:method] = @attributes[:method].downcase.to_sym
+  end
+
+  def init_headers
+    i = 1
+    while (i < @request_arr.length) && (@request_arr[i] != [])
+      @attributes[:headers] += [@request_arr[i]]
+      i += 1
+    end
+  end
+
   def init_params
-    if @attributes[:method] == "GET"
+    if @attributes[:method] == :get
       @attributes[:resource], @attributes[:params] = @attributes[:resource].split("?")
-    elsif @attributes[:method] == "POST"
-
-      #AHHHHHHHHHHHHH
-
+    elsif @attributes[:method] == :post
+      if @request_arr[@request_arr.length-1] != []
+        @attributes[:params] = @request_arr[@request_arr.length-1][0]
+      end
     else
       raise "Invalid HTTP method"
     end
@@ -46,4 +60,10 @@ class Request
   end
 end
 
-r = Request.new("GET /examples HTTP/1.1\nHost: example.com\nUser-Agent: ExampleBrowser/1.0\nAccept-Encoding: gzip, deflate\nAccept: */*\n")
+#r = Request.new("POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&password=verys3cret!")
+#
+#p r.method
+#p r.resource
+#p r.version
+#p r.headers
+#p r.params
