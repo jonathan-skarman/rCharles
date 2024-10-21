@@ -19,6 +19,9 @@ class Request
       @attributes[:headers] += [@request_arr[i]]
       i += 1
     end
+
+    @attributes[:headers].each {|arr| arr[0].sub! "-", "_" ; arr[0] = arr[0][(0..((arr[0].length) -2))].to_sym}
+    @attributes[:headers] = @attributes[:headers].to_h
   end
 
   def init_params
@@ -60,10 +63,16 @@ class Request
   end
 end
 
-#r = Request.new("POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&password=verys3cret!")
-#
-#p r.method
-#p r.resource
-#p r.version
-#p r.headers
-#p r.params
+def printer
+  r = Request.new("POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&password=verys3cret!")
+  p r.method #==> :post
+  p r.resource #==> "/login"
+  p r.version #==> "HTTP/1.1"
+  p r.headers #==> [["Host:", "foo.example"], ["Content-Type:", "application/x-www-form-urlencoded"], ["Content-Length:", "39"]]
+  p r.params #==> ["username=grillkorv", "password=verys3cret!"]
+end
+
+#printer()
+
+#headers to hash
+#params to hash

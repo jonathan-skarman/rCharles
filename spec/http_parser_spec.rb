@@ -20,6 +20,12 @@ describe 'Request' do
 			_(@request.version).must_equal "HTTP/1.1"
 		end
 
+		it 'parses the headers' do
+			@request = Request.new(File.read('./spec/example_requests/get-index.request.txt'))
+			@hash = {Host: "developer.mozilla.org", Accept_Language: "fr"}
+			_(@request.headers).must_equal @hash
+		end
+
 	end
 
 	describe 'adjective post-request' do
