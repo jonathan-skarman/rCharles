@@ -45,6 +45,15 @@ describe 'Request' do
 			_(@request.version).must_equal "HTTP/1.1"
 		end
 
+		it 'parses the headers' do
+			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
+
+
+
+			@hash = {Host: "foo.example", Content_Type: "application/x-www-form-urlencoded", Content_Length: "39"}
+			_(@request.headers).must_equal @hash
+		end
+
 	end
 
 end
