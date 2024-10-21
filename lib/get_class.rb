@@ -15,12 +15,6 @@ class HTTPrequest
 
     #@hash[:headers] = Hash[@headers.map {|el| el.split(": ")}]
 
-
-
-    if !(request[(request.length-2..request.length-1)] == "\n") #if final 2 of request isn't newline
-      #@hash[:params] = Hash[@params.split("&").map {|el| el.split("=")}]
-    end
-
     #get routes har params efter resource, efter ett & tecken utan mellanslag
     #post routes har en newline mellan headers och params
 
@@ -30,9 +24,11 @@ class HTTPrequest
     if @hash[:method] == "GET"
       @hash[:resource], @hash[:params] = @hash[:resource].split("?")
     elsif @hash[:method] == "POST"
+
       if !(request[(request.length-2..request.length-1)] == "\n") #if final 2 of request isn't newline
       #@hash[:params] = Hash[@params.split("&").map {|el| el.split("=")}]
       end
+
     else
       raise "Invalid HTTP method"
     end
