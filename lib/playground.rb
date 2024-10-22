@@ -1,3 +1,3 @@
-str = "GET"
-str = str.to_sym
-p str
+@hash = {Host: "example.com", User-Agent: "ExampleBrowser/1.0", Accept-Encoding: ["gzip", "deflate"], Accept: "*/*"}
+
+p @hash
