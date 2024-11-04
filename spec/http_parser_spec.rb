@@ -84,7 +84,7 @@ describe 'Request' do
 
 		it 'parses the headers' do
 			@request = Request.new(File.read('./spec/example_requests/get-examples.request.txt'))
-			@hash = {Host: "example.com", User_Agent: "ExampleBrowser/1.0", Accept_Encoding: ["gzip", "deflate"], Accept: "*/*"}
+			@hash = {Host: "example.com", User_Agent: "ExampleBrowser/1.0", Accept_Encoding: "gzip, deflate", Accept: "*/*"}
 			_(@request.headers).must_equal @hash
 		end
 
@@ -115,7 +115,7 @@ describe 'Request' do
 
 		it 'parses the headers' do
 			@request = Request.new(File.read('./spec/example_requests/get-fruits-with-filter.request.txt'))
-			@hash = {Host: "fruits.com", User_Agent: "ExampleBrowser/1.0", Accept_Encoding: ["gzip", "deflate"], Accept: "*/*"}
+			@hash = {Host: "fruits.com", User_Agent: "ExampleBrowser/1.0", Accept_Encoding: "gzip, deflate", Accept: "*/*"}
 			_(@request.headers).must_equal @hash
 		end
 
