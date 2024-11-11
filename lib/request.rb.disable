@@ -1,0 +1,36 @@
+#frozen_string_literal: true
+#rubocop sa att jag skulle ha en kommentar här
+#från pontus
+
+class Request
+  def initialize(request_string)
+    #p request_string
+    start_line, *@headers = request_string.split("\n").reject(&:empty?)
+
+    @method, @resource, @version = start_line.split
+
+    if @resource.include?('?')
+      @resource, @params = @resource.split('?')
+    elsif @headers.last.include?('=')
+      *@headers, @params = @headers
+    end
+
+    @headers = @headers.map { |element| element.split(': ') }
+
+    @params = @params&.split('&')&.map { |element| element.split('=') }
+  end
+
+  def method
+    @method.downcase.to_sym
+  end
+
+  attr_reader :resource, :version
+
+  def headers
+    Hash[@headers]
+  end
+
+  def params
+    @params ? Hash[@params] : nil
+  end
+end

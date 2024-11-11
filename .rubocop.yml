@@ -1,2 +1,19 @@
 Layout/IndentationStyle:
+  IndentationWidth: 1
   EnforcedStyle: tabs
+
+Layout/IndentationWidth:
+  Width: 1
+
+Metrics/MethodLength:
+  Max: 20  # Set this to the desired maximum number of lines
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "lib/playground.rb"
+    #- "!lib/request.rb"    # Only include `lib/my_file.rb`
+

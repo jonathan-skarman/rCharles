@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <script src='./assets/0.13.1/application.js' type='text/javascript'></script>
     <link href='./assets/0.13.1/application.css' media='screen, projection, print' rel='stylesheet' type='text/css' />
-    <link rel="icon" type="image/png" href="./assets/0.13.1/favicon_green.png" />
+    <link rel="icon" type="image/png" href="./assets/0.13.1/favicon_red.png" />
   </head>
 
   <body>
@@ -13,7 +13,7 @@
       <img src="./assets/0.13.1/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2024-11-04T10:16:34+01:00">2024-11-04T10:16:34+01:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2024-11-11T09:58:18+01:00">2024-11-11T09:58:18+01:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -21,15 +21,15 @@
   <h2>
     <span class="group_name">All Files</span>
     (<span class="covered_percent">
-      <span class="green">
-  90.91%
+      <span class="red">
+  23.68%
 </span>
 
      </span>
      covered at
      <span class="covered_strength">
-       <span class="green">
-         1.41
+       <span class="red">
+         0.24
        </span>
     </span> hits/line
     )
@@ -42,11 +42,11 @@
   </div>
 
   <div class="t-line-summary">
-    <b>44</b> relevant lines,
-    <span class="green"><b>40</b> lines covered</span> and
-    <span class="red"><b>4</b> lines missed. </span>
-    (<span class="green">
-  90.91%
+    <b>38</b> relevant lines,
+    <span class="green"><b>9</b> lines covered</span> and
+    <span class="red"><b>29</b> lines missed. </span>
+    (<span class="red">
+  23.68%
 </span>
 )
   </div>
@@ -71,12 +71,12 @@
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#a84dcc0012045e6133fa43dd2e799e6f3e5291f5" class="src_link" title="lib/request.rb">lib/request.rb</a></td>
-            <td class="green strong cell--number t-file__coverage">90.91 %</td>
-            <td class="cell--number">84</td>
-            <td class="cell--number">44</td>
-            <td class="cell--number">40</td>
-            <td class="cell--number">4</td>
-            <td class="cell--number">1.41</td>
+            <td class="red strong cell--number t-file__coverage">23.68 %</td>
+            <td class="cell--number">76</td>
+            <td class="cell--number">38</td>
+            <td class="cell--number">9</td>
+            <td class="cell--number">29</td>
+            <td class="cell--number">0.24</td>
             
           </tr>
         
@@ -101,8 +101,8 @@
   <div class="header">
     <h3>lib/request.rb</h3>
     <h4>
-      <span class="green">
-  90.91%
+      <span class="red">
+  23.68%
 </span>
 
       lines covered
@@ -111,9 +111,9 @@
     
 
     <div class="t-line-summary">
-      <b>44</b> relevant lines.
-      <span class="green"><b>40</b> lines covered</span> and
-      <span class="red"><b>4</b> lines missed.</span>
+      <b>38</b> relevant lines.
+      <span class="green"><b>9</b> lines covered</span> and
+      <span class="red"><b>29</b> lines missed.</span>
     </div>
 
     
@@ -124,38 +124,32 @@
     <ol>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="1">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="1">
             
 
             
 
-            <code class="ruby">class Request</code>
+            <code class="ruby"># frozen_string_literal: true</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="2">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="2">
             
 
             
 
-            <code class="ruby">  def initialize(request)</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="3">
-            
-              <span class="hits">6</span>
+          <li class="never" data-hits="" data-linenumber="3">
             
 
             
 
-            <code class="ruby">    @request_arr = request.split(&quot;\n&quot;).map { |el| el.split(&#39;: &#39;) }</code>
+            <code class="ruby"># sluta klaga rubocop</code>
           </li>
         </div>
       
@@ -167,39 +161,39 @@
 
             
 
-            <code class="ruby">    @request_arr[0] = @request_arr[0][0].split(&#39; &#39;)</code>
+            <code class="ruby">class Request</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="5">
-            
-
-            
-
-            <code class="ruby">    @attributes = {</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="6">
+          <li class="covered" data-hits="1" data-linenumber="5">
             
               <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      method: @request_arr[0][0].downcase.to_sym,</code>
+            <code class="ruby">	def initialize(request)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="7">
+          <li class="missed" data-hits="0" data-linenumber="6">
             
 
             
 
-            <code class="ruby">      resource: @request_arr[0][1],</code>
+            <code class="ruby">		@request_arr = request.split(&quot;\n&quot;).map { |el| el.split(&#39;: &#39;) }</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="7">
+            
+
+            
+
+            <code class="ruby">		@request_arr[0] = @request_arr[0][0].split</code>
           </li>
         </div>
       
@@ -209,17 +203,17 @@
 
             
 
-            <code class="ruby">      version: @request_arr[0][2],</code>
+            <code class="ruby">		@attributes = {</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="9">
+          <li class="missed" data-hits="0" data-linenumber="9">
             
 
             
 
-            <code class="ruby">      headers: [],</code>
+            <code class="ruby">			method: @request_arr[0][0].downcase.to_sym,</code>
           </li>
         </div>
       
@@ -229,7 +223,7 @@
 
             
 
-            <code class="ruby">      params: nil</code>
+            <code class="ruby">			resource: @request_arr[0][1],</code>
           </li>
         </div>
       
@@ -239,31 +233,27 @@
 
             
 
-            <code class="ruby">    }</code>
+            <code class="ruby">			version: @request_arr[0][2],</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="12">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="12">
             
 
             
 
-            <code class="ruby">    init_headers</code>
+            <code class="ruby">			headers: [],</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="13">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="13">
             
 
             
 
-            <code class="ruby">    init_params</code>
+            <code class="ruby">			params: nil</code>
           </li>
         </div>
       
@@ -273,12 +263,42 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">		}</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="15">
+          <li class="missed" data-hits="0" data-linenumber="15">
+            
+
+            
+
+            <code class="ruby">		init_headers</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="16">
+            
+
+            
+
+            <code class="ruby">		init_params</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="17">
+            
+
+            
+
+            <code class="ruby">	end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="18">
             
 
             
@@ -288,77 +308,69 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="16">
+          <li class="covered" data-hits="1" data-linenumber="19">
             
               <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def init_headers</code>
+            <code class="ruby">	def init_headers</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="17">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="20">
             
 
             
 
-            <code class="ruby">    i = 1</code>
+            <code class="ruby">		i = 1</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="6" data-linenumber="18">
-            
-              <span class="hits">6</span>
+          <li class="missed" data-hits="0" data-linenumber="21">
             
 
             
 
-            <code class="ruby">    while (i &lt; @request_arr.length) &amp;&amp; (@request_arr[i] != [])</code>
+            <code class="ruby">		while (i &lt; @request_arr.length) &amp;&amp; (@request_arr[i] != [])</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="19">
-            
-              <span class="hits">4</span>
+          <li class="missed" data-hits="0" data-linenumber="22">
             
 
             
 
-            <code class="ruby">      @attributes[:headers] += [@request_arr[i]]</code>
+            <code class="ruby">			@attributes[:headers] += [@request_arr[i]]</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="20">
-            
-              <span class="hits">4</span>
+          <li class="missed" data-hits="0" data-linenumber="23">
             
 
             
 
-            <code class="ruby">      i += 1</code>
+            <code class="ruby">			i += 1</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="21">
+          <li class="never" data-hits="" data-linenumber="24">
             
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">		end</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="22">
+          <li class="never" data-hits="" data-linenumber="25">
             
 
             
@@ -368,70 +380,32 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="23">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="26">
             
 
             
 
-            <code class="ruby">    @attributes[:headers].each do |arr|</code>
+            <code class="ruby">		@attributes[:headers].each do |arr|</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="24">
-            
-              <span class="hits">4</span>
+          <li class="missed" data-hits="0" data-linenumber="27">
             
 
             
 
-            <code class="ruby">      arr[0].sub! &#39;-&#39;, &#39;_&#39;</code>
+            <code class="ruby">			arr[0].sub! &#39;-&#39;, &#39;_&#39;</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="25">
-            
-              <span class="hits">4</span>
+          <li class="missed" data-hits="0" data-linenumber="28">
             
 
             
 
-            <code class="ruby">      arr[0] = arr[0].to_sym</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="26">
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="27">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    @attributes[:headers] = @attributes[:headers].to_h</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="28">
-            
-
-            
-
-            <code class="ruby">  end</code>
+            <code class="ruby">			arr[0] = arr[0].to_sym</code>
           </li>
         </div>
       
@@ -441,53 +415,49 @@
 
             
 
+            <code class="ruby">		end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="30">
+            
+
+            
+
+            <code class="ruby">		@attributes[:headers] = @attributes[:headers].to_h</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="31">
+            
+
+            
+
+            <code class="ruby">	end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="32">
+            
+
+            
+
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="30">
+          <li class="covered" data-hits="1" data-linenumber="33">
             
               <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def init_params</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="31">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">    if @attributes[:method] == :get</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="32">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      @attributes[:resource], @attributes[:params] = @attributes[:resource].split(&#39;?&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="missed" data-hits="0" data-linenumber="33">
-            
-
-            
-
-            <code class="ruby">    elsif @attributes[:method] == :post</code>
+            <code class="ruby">	def init_params</code>
           </li>
         </div>
       
@@ -497,17 +467,17 @@
 
             
 
-            <code class="ruby">      @attributes[:params] = @request_arr[@request_arr.length - 1][0] if @request_arr[@request_arr.length - 1] != []</code>
+            <code class="ruby">		if @attributes[:method] == :get</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="35">
+          <li class="missed" data-hits="0" data-linenumber="35">
             
 
             
 
-            <code class="ruby">    else</code>
+            <code class="ruby">			@attributes[:resource], @attributes[:params] = @attributes[:resource].split(&#39;?&#39;)</code>
           </li>
         </div>
       
@@ -517,17 +487,17 @@
 
             
 
-            <code class="ruby">      raise &#39;Invalid HTTP method&#39;</code>
+            <code class="ruby">		elsif @attributes[:method] == :post</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="missed" data-hits="0" data-linenumber="37">
             
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">			@attributes[:params] = @request_arr[@request_arr.length - 1][0] if @request_arr[@request_arr.length - 1] != []</code>
           </li>
         </div>
       
@@ -537,58 +507,32 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">		else</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="39">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="39">
             
 
             
 
-            <code class="ruby">    if @attributes[:params].nil?</code>
+            <code class="ruby">			raise &#39;Invalid HTTP method&#39;</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="40">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="40">
             
 
             
 
-            <code class="ruby">      @attributes[:params] = {}</code>
+            <code class="ruby">		end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="41">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">      return</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="42">
-            
-
-            
-
-            <code class="ruby">    end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="43">
+          <li class="never" data-hits="" data-linenumber="41">
             
 
             
@@ -598,12 +542,32 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="44">
+          <li class="missed" data-hits="0" data-linenumber="42">
             
 
             
 
-            <code class="ruby">    # @attributes[:params] = {} if @attributes[:params].nil?</code>
+            <code class="ruby">		if @attributes[:params].nil?</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="43">
+            
+
+            
+
+            <code class="ruby">			@attributes[:params] = {}</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="missed" data-hits="0" data-linenumber="44">
+            
+
+            
+
+            <code class="ruby">			return</code>
           </li>
         </div>
       
@@ -613,7 +577,7 @@
 
             
 
-            <code class="ruby">    # return unless @attributes[:params] != {}</code>
+            <code class="ruby">		end</code>
           </li>
         </div>
       
@@ -628,12 +592,12 @@
         </div>
       
         <div>
-          <li class="missed" data-hits="0" data-linenumber="47">
+          <li class="never" data-hits="" data-linenumber="47">
             
 
             
 
-            <code class="ruby">    @attributes[:params] = @attributes[:params].split(&#39;&amp;&#39;).map { |str| str.split(&#39;=&#39;) }.each { |arr| arr[0] = arr[0].to_sym }.to_h</code>
+            <code class="ruby">		# @attributes[:params] = {} if @attributes[:params].nil?</code>
           </li>
         </div>
       
@@ -643,7 +607,7 @@
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">		# return unless @attributes[:params] != {}</code>
           </li>
         </div>
       
@@ -658,70 +622,62 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="50">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="50">
             
 
             
 
-            <code class="ruby">  def method</code>
+            <code class="ruby">		@attributes[:params] = @attributes[:params]</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="51">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="51">
             
 
             
 
-            <code class="ruby">    @attributes[:method]</code>
+            <code class="ruby">		.split(&#39;&amp;&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="52">
+          <li class="missed" data-hits="0" data-linenumber="52">
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">		.map { |str| str.split(&#39;=&#39;) }</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="53">
+          <li class="missed" data-hits="0" data-linenumber="53">
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">		.each { |arr| arr[0] = arr[0].to_sym }</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="54">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="54">
             
 
             
 
-            <code class="ruby">  def resource</code>
+            <code class="ruby">		.to_h</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="55">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="55">
             
 
             
 
-            <code class="ruby">    @attributes[:resource]</code>
+            <code class="ruby">	end</code>
           </li>
         </div>
       
@@ -731,41 +687,39 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="57">
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="58">
+          <li class="covered" data-hits="1" data-linenumber="57">
             
               <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def version</code>
+            <code class="ruby">	def method</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="59">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="58">
             
 
             
 
-            <code class="ruby">    @attributes[:version]</code>
+            <code class="ruby">		@attributes[:method]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="59">
+            
+
+            
+
+            <code class="ruby">	end</code>
           </li>
         </div>
       
@@ -775,41 +729,39 @@
 
             
 
-            <code class="ruby">  end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="61">
-            
-
-            
-
             <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="62">
+          <li class="covered" data-hits="1" data-linenumber="61">
             
               <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def headers</code>
+            <code class="ruby">	def resource</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="63">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="62">
             
 
             
 
-            <code class="ruby">    @attributes[:headers]</code>
+            <code class="ruby">		@attributes[:resource]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="63">
+            
+
+            
+
+            <code class="ruby">	end</code>
           </li>
         </div>
       
@@ -819,22 +771,44 @@
 
             
 
-            <code class="ruby">    # Hash[@headers.map {|el| el.split(&quot;: &quot;)}]</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="65">
+          <li class="covered" data-hits="1" data-linenumber="65">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  end</code>
+            <code class="ruby">	def version</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="66">
+          <li class="missed" data-hits="0" data-linenumber="66">
+            
+
+            
+
+            <code class="ruby">		@attributes[:version]</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="67">
+            
+
+            
+
+            <code class="ruby">	end</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="never" data-hits="" data-linenumber="68">
             
 
             
@@ -844,46 +818,24 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="67">
+          <li class="covered" data-hits="1" data-linenumber="69">
             
               <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">  def params</code>
+            <code class="ruby">	def headers</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="68">
-            
-              <span class="hits">1</span>
+          <li class="missed" data-hits="0" data-linenumber="70">
             
 
             
 
-            <code class="ruby">    @attributes[:params]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="69">
-            
-
-            
-
-            <code class="ruby">    # Hash[@params.split(&quot;&amp;&quot;).map {|el| el.split(&quot;=&quot;)}]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="70">
-            
-
-            
-
-            <code class="ruby">  end</code>
+            <code class="ruby">		@attributes[:headers]</code>
           </li>
         </div>
       
@@ -893,7 +845,7 @@
 
             
 
-            <code class="ruby">end</code>
+            <code class="ruby">	end</code>
           </li>
         </div>
       
@@ -915,17 +867,17 @@
 
             
 
-            <code class="ruby">def printer</code>
+            <code class="ruby">	def params</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="74">
+          <li class="missed" data-hits="0" data-linenumber="74">
             
 
             
 
-            <code class="ruby">  # r = Request.new(&quot;POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&amp;password=verys3cret!&quot;)</code>
+            <code class="ruby">		@attributes[:params]</code>
           </li>
         </div>
       
@@ -935,111 +887,17 @@
 
             
 
-            <code class="ruby">  # r = Request.new(&quot;GET / HTTP/1.1\nHost: developer.mozilla.org\nAccept-Language: fr&quot;)</code>
+            <code class="ruby">	end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="76">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  r = Request.new(&quot;GET /examples HTTP/1.1\nHost: example.com\nUser-Agent: ExampleBrowser/1.0\nAccept-Encoding: gzip, deflate\nAccept: */*&quot;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="77">
-            
-
-            
-
-            <code class="ruby"></code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="78">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  p r.method #==&gt; :post</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="79">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  p r.resource #==&gt; &quot;/login&quot;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="80">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  p r.version #==&gt; &quot;HTTP/1.1&quot;</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="81">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  p r.headers #==&gt; {:Host=&gt;&quot;foo.example&quot;, :Content_Type=&gt;&quot;application/x-www-form-urlencoded&quot;, :Content_Length=&gt;&quot;39&quot;}</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="82">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">  p r.params #==&gt; [&quot;username=grillkorv&quot;, &quot;password=verys3cret!&quot;]</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="83">
+          <li class="never" data-hits="" data-linenumber="76">
             
 
             
 
             <code class="ruby">end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="84">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">printer</code>
           </li>
         </div>
       

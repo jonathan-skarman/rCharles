@@ -34,7 +34,7 @@ describe 'Request' do
 
 	end
 
-	describe 'adjective post-request' do
+	describe 'Simple post-request' do
 
 		it 'parses the http method' do
 			@request = Request.new(File.read('./spec/example_requests/post-login.request.txt'))
