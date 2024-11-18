@@ -28,8 +28,7 @@ describe 'Request' do
 
 		it 'parses the params' do
 			@request = Request.new(File.read('./spec/example_requests/get-index.request.txt'))
-			@hash = {}
-			_(@request.params).must_equal @hash
+			assert_nil @request.params
 		end
 
 	end
@@ -90,8 +89,7 @@ describe 'Request' do
 
 		it 'parses the params' do
 			@request = Request.new(File.read('./spec/example_requests/get-examples.request.txt'))
-			@hash = {}
-			_(@request.params).must_equal @hash
+			assert_nil @request.params
 		end
 
 	end

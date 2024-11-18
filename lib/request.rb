@@ -17,6 +17,9 @@ class Request
 	end
 
 	def init_headers
+		#inte fin kod, men måste ha startpunk i = 1, vilket inte går med .each eller .map
+		#dessutom behövs [] för att hitta var headers slutar och params börjar i post requests
+		#kanske kan optimera via att splitta upp dom och inte kolla efter [] vid get requests, men då måste mycket kod repeteras
 		i = 1
 		while (i < @request_arr.length) && (@request_arr[i] != [])
 			@attributes[:headers] += [@request_arr[i]]
@@ -31,27 +34,24 @@ class Request
 	end
 
 	def init_params
-		if @attributes[:method] == :get
+		case @attributes[:method]
+		when :get
 			@attributes[:resource], @attributes[:params] = @attributes[:resource].split('?')
-		elsif @attributes[:method] == :post
+		when :post
 			@attributes[:params] = @request_arr[@request_arr.length - 1][0] if @request_arr[@request_arr.length - 1] != []
 		else
 			raise 'Invalid HTTP method'
 		end
 
 		if @attributes[:params].nil?
-			@attributes[:params] = {}
 			return
+		else
+			@attributes[:params] = @attributes[:params]
+			.split('&')
+			.map { |str| str.split('=') }
+			.each { |arr| arr[0] = arr[0].to_sym }
+			.to_h
 		end
-
-		# @attributes[:params] = {} if @attributes[:params].nil?
-		# return unless @attributes[:params] != {}
-
-		@attributes[:params] = @attributes[:params]
-		.split('&')
-		.map { |str| str.split('=') }
-		.each { |arr| arr[0] = arr[0].to_sym }
-		.to_h
 	end
 
 	def method
