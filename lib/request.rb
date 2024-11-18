@@ -45,13 +45,13 @@ class Request
 
 		if @attributes[:params].nil?
 			return
-		else
-			@attributes[:params] = @attributes[:params]
-			.split('&')
-			.map { |str| str.split('=') }
-			.each { |arr| arr[0] = arr[0].to_sym }
-			.to_h
 		end
+
+		@attributes[:params] = @attributes[:params]
+		.split('&')
+		.map { |str| str.split('=') }
+		.each { |arr| arr[0] = arr[0].to_sym }
+		.to_h
 	end
 
 	def method

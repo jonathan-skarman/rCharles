@@ -1,5 +1,22 @@
-require 'socket'
 # frozen_string_literal: true
+require 'socket'
+require_relative 'request'
+
+# router klass eftersom den tydligen behövs
+class Router
+	def initialize
+	end
+
+	def add_route
+	end
+
+	def match_route(resource)
+	end
+
+	def exist?(resource)
+		File.exist?("./public/#{resource}.html")
+	end
+end
 
 # sluta klaga rubocop
 class HTTPServer
@@ -13,9 +30,9 @@ class HTTPServer
 		# router = Router.new
 		# router.add_route...
 
-		while session = server.accept #error?
+		while session = server.accept # rubocop:disable Lint/AssignmentInCondition
 			data = ''
-			while line = session.gets and line !~ /^\s*$/ #error?
+			while line = session.gets and line !~ /^\s*$/ # rubocop:disable Lint/AssignmentInCondition
 				data += line
 			end
 			puts 'RECEIVED REQUEST'
@@ -23,14 +40,12 @@ class HTTPServer
 			puts data
 			puts '-' * 40
 
-			# request = Request.new(data)
-			# router.match_route(request)
-			# Sen kolla om resursen (filen finns)
+			request = Request.new(data)
+			html, status = Response.new.send(request.resource)
 
 			# Nedanstående bör göras i er Response-klass
-			html = '<h1>Hello, World!</h1>'
-
-			session.print "HTTP/1.1 200\r\n"
+				#men då behöver jag lista ut hur jag skickar session till response-klassen
+			session.print "HTTP/1.1 #{status}\r\n"
 			session.print "Content-Type: text/html\r\n"
 			session.print "\r\n"
 			session.print html
@@ -39,5 +54,24 @@ class HTTPServer
 	end
 end
 
-server = HTTPServer.new(4567)
-server.start
+# respons klass så HTTPserver klassen blir läsbar alls
+class Response
+	def initialize
+	end
+
+	def send(resource)
+		if resource == "/"
+			resource = "index"
+		end
+
+		if File.exist?("./public/#{resource}.html")
+			html = File.read("./public/#{resource}.html")
+			status = 200
+		else
+			html = '<h1>404 Not Found</h1>'
+			status = 404
+		end
+
+		return html, status
+	end
+end
