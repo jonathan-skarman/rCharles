@@ -6,25 +6,26 @@ class Request
 		@request_arr = request.split("\n").map { |el| el.split(': ') }
 		@request_arr[0] = @request_arr[0][0].split
 		@attributes = {
-			method: @request_arr[0][0].downcase.to_sym,
-			resource: @request_arr[0][1],
-			version: @request_arr[0][2],
+			method: @request_arr[0].shift.downcase.to_sym,
+			resource: @request_arr[0].shift,
+			version: @request_arr[0].shift,
 			headers: [],
 			params: nil
 		}
+		@request_arr.shift
 		init_headers
 		init_params
 	end
 
 	def init_headers
-		#inte fin kod, men måste ha startpunk i = 1, vilket inte går med .each eller .map
-		#dessutom behövs [] för att hitta var headers slutar och params börjar i post requests
-		#kanske kan optimera via att splitta upp dom och inte kolla efter [] vid get requests, men då måste mycket kod repeteras
-		i = 1
-		while (i < @request_arr.length) && (@request_arr[i] != [])
-			@attributes[:headers] += [@request_arr[i]]
-			i += 1
+		@request_arr.each do |el|
+			if el == []
+				break
+			end
+			@attributes[:headers] += [el]
 		end
+
+
 
 		@attributes[:headers].each do |arr|
 			arr[0].sub! '-', '_'

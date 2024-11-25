@@ -1,5 +1,6 @@
 require_relative 'spec_helper'
-require_relative '../lib/request'
+#require_relative '../lib/request'
+require_relative '../lib/req-test'
 
 describe 'Request' do
 

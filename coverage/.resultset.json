@@ -1,7 +1,7 @@
 {
   "Minitest": {
     "coverage": {
-      "C:/Users/jonathan.nissovskar/Kod/Github Repositories/rCharles/lib/request.rb": {
+      "C:/Users/jonathan.nissovskar/Kod/Github Repositories/rCharles/lib/req-test.rb": {
         "lines": [
           null,
           null,
@@ -10,7 +10,6 @@
           1,
           0,
           0,
-          0,
           null,
           0,
           null,
@@ -20,32 +19,37 @@
           null,
           0,
           0,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
           0,
           null,
           null,
           1,
           0,
+          0,
+          0,
           null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
           0,
           null,
           0,
           null,
           0,
           null,
+          0,
           null,
+          null,
+          0,
           0,
           null,
           null,
@@ -53,7 +57,6 @@
           null,
           0,
           0,
-          null,
           null,
           null,
           null,
@@ -80,7 +83,7 @@
         ]
       }
     },
-    "timestamp": 1731916229
+    "timestamp": 1732521701
   },
   "RSpec": {
     "coverage": {
