@@ -15,8 +15,13 @@
 #	arr
 #end
 
-if x = false
-	p 'true'
-else
-	p 'false'
-end
+#if x = false
+#	p 'true'
+#else
+#	p 'false'
+#end
+
+hash = {}
+hash[:key] = 'value'
+
+p hash
