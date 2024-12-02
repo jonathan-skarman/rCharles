@@ -2,7 +2,7 @@
 
 # sluta klaga rubocop
 class Request
-	def initialize(request)
+	def initialize(request) # rubocop:disable Metrics/AbcSize
 		@request_arr = request.split("\n").map { |el| el.split(': ') }
 		@request_arr[0] = @request_arr[0][0].split
 		@attributes = {
@@ -19,13 +19,10 @@ class Request
 
 	def init_headers
 		@request_arr.each do |el|
-			if el == []
-				break
-			end
+			break if el == []
+
 			@attributes[:headers] += [el]
 		end
-
-
 
 		@attributes[:headers].each do |arr|
 			arr[0].sub! '-', '_'
@@ -34,7 +31,7 @@ class Request
 		@attributes[:headers] = @attributes[:headers].to_h
 	end
 
-	def init_params
+	def init_params # rubocop:disable Metrics/AbcSize
 		case @attributes[:method]
 		when :get
 			@attributes[:resource], @attributes[:params] = @attributes[:resource].split('?')
@@ -44,9 +41,7 @@ class Request
 			raise 'Invalid HTTP method'
 		end
 
-		if @attributes[:params].nil?
-			return
-		end
+		return if @attributes[:params].nil?
 
 		@attributes[:params] = @attributes[:params]
 		.split('&')
