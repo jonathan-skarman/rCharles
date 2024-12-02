@@ -62,21 +62,21 @@
       <div class="col-md-8">
         <div class="row">
           <div class="col-md-1">
-            <div class="rating c big">
-              C
+            <div class="rating b big">
+              B
             </div>
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">83</span><small> lines of codes</small></div>
-              <div><span class="metric">10</span><small> methods</small></div>
+              <div><span class="metric">72</span><small> lines of codes</small></div>
+              <div><span class="metric">8</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">11.5</span><small> complexity/method</small></div>
-              <div><span class="metric">4</span><small> churn</small></div>
+              <div><span class="metric">8.8</span><small> complexity/method</small></div>
+              <div><span class="metric">11</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">114.69</span><small> complexity</small></div>
+              <div><span class="metric">70.49</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                16
+                12
                 smells
               </a>
             </li>
@@ -97,89 +97,78 @@
       </div>
     </div>
 
-    <code class="prettyprint linenums lang-ruby file-code js-file-code">class Request<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Irresponsible-Module.md" target="_blank"><b>IrresponsibleModule</b></a>        </span>      </div>      <span>Request has no descriptive comment</span>          </div>  </li></ol>
-  def initialize(request)
-    @request_arr = request.split(&quot;\n&quot;).map { |el| el.split(&#39;: &#39;) }
-    @request_arr[0] = @request_arr[0][0].split(&#39; &#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L4" class="js-smell-location">0</a>                  <a href="request.html#L6" class="js-smell-location">1</a>                  </div>  </li></ol>
-    @attributes = { method: nil, resource: nil, version: nil, headers: [], params: nil }
-    @attributes[:method], @attributes[:resource], @attributes[:version] = @request_arr[0]<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L4" class="js-smell-location">0</a>                  <a href="request.html#L6" class="js-smell-location">1</a>                  </div>  </li></ol>
-    init_method
-    init_headers
-    init_params
-  end
+    <code class="prettyprint linenums lang-ruby file-code js-file-code"># frozen_string_literal: true
 
-  def init_method
-    @attributes[:method] = @attributes[:method].downcase.to_sym
-  end
+# sluta klaga rubocop
+class Request
+	def initialize(request) # rubocop:disable Metrics/AbcSize
+		@request_arr = request.split(&quot;\n&quot;).map { |el| el.split(&#39;: &#39;) }
+		@request_arr[0] = @request_arr[0][0].split<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0]' 4 times</span>              <span>Locations:</span>                  <a href="request.html#L7" class="js-smell-location">0</a>                  <a href="request.html#L9" class="js-smell-location">1</a>                  <a href="request.html#L10" class="js-smell-location">2</a>                  <a href="request.html#L11" class="js-smell-location">3</a>                  </div>  </li></ol>
+		@attributes = {
+			method: @request_arr[0].shift.downcase.to_sym,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0]' 4 times</span>              <span>Locations:</span>                  <a href="request.html#L7" class="js-smell-location">0</a>                  <a href="request.html#L9" class="js-smell-location">1</a>                  <a href="request.html#L10" class="js-smell-location">2</a>                  <a href="request.html#L11" class="js-smell-location">3</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0].shift' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L9" class="js-smell-location">0</a>                  <a href="request.html#L10" class="js-smell-location">1</a>                  <a href="request.html#L11" class="js-smell-location">2</a>                  </div>  </li></ol>
+			resource: @request_arr[0].shift,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0]' 4 times</span>              <span>Locations:</span>                  <a href="request.html#L7" class="js-smell-location">0</a>                  <a href="request.html#L9" class="js-smell-location">1</a>                  <a href="request.html#L10" class="js-smell-location">2</a>                  <a href="request.html#L11" class="js-smell-location">3</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0].shift' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L9" class="js-smell-location">0</a>                  <a href="request.html#L10" class="js-smell-location">1</a>                  <a href="request.html#L11" class="js-smell-location">2</a>                  </div>  </li></ol>
+			version: @request_arr[0].shift,<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0]' 4 times</span>              <span>Locations:</span>                  <a href="request.html#L7" class="js-smell-location">0</a>                  <a href="request.html#L9" class="js-smell-location">1</a>                  <a href="request.html#L10" class="js-smell-location">2</a>                  <a href="request.html#L11" class="js-smell-location">3</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#initialize calls '@request_arr[0].shift' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L9" class="js-smell-location">0</a>                  <a href="request.html#L10" class="js-smell-location">1</a>                  <a href="request.html#L11" class="js-smell-location">2</a>                  </div>  </li></ol>
+			headers: [],
+			params: nil
+		}
+		@request_arr.shift
+		init_headers
+		init_params
+	end
 
-  def init_headers<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Request#init_headers has a flog score of 28</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#init_headers has approx 7 statements</span>          </div>  </li></ol>
-    i = 1<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>Request#init_headers has the variable name 'i'</span>              <span>Locations:</span>                  <a href="request.html#L17" class="js-smell-location">0</a>                  <a href="request.html#L20" class="js-smell-location">1</a>                  </div>  </li></ol>
-    while (i &lt; @request_arr.length) &amp;&amp; (@request_arr[i] != [])<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@request_arr[i]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L18" class="js-smell-location">0</a>                  <a href="request.html#L19" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @attributes[:headers] += [@request_arr[i]]<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@attributes[:headers]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L19" class="js-smell-location">0</a>                  <a href="request.html#L23" class="js-smell-location">1</a>                  <a href="request.html#L27" class="js-smell-location">2</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@request_arr[i]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L18" class="js-smell-location">0</a>                  <a href="request.html#L19" class="js-smell-location">1</a>                  </div>  </li></ol>
-      i += 1<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Uncommunicative-Variable-Name.md" target="_blank"><b>UncommunicativeVariableName</b></a>        </span>      </div>      <span>Request#init_headers has the variable name 'i'</span>              <span>Locations:</span>                  <a href="request.html#L17" class="js-smell-location">0</a>                  <a href="request.html#L20" class="js-smell-location">1</a>                  </div>  </li></ol>
-    end
+	def init_headers<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#init_headers has approx 7 statements</span>          </div>  </li></ol>
+		@request_arr.each do |el|
+			break if el == []
 
-    @attributes[:headers].each do |arr|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@attributes[:headers]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L19" class="js-smell-location">0</a>                  <a href="request.html#L23" class="js-smell-location">1</a>                  <a href="request.html#L27" class="js-smell-location">2</a>                  </div>  </li></ol>
-      arr[0].sub! &#39;-&#39;, &#39;_&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls 'arr[0]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L24" class="js-smell-location">0</a>                  <a href="request.html#L25" class="js-smell-location">1</a>                  </div>  </li></ol>
-      arr[0] = arr[0][(0..(arr[0].length - 1))].to_sym<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls 'arr[0]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L24" class="js-smell-location">0</a>                  <a href="request.html#L25" class="js-smell-location">1</a>                  </div>  </li></ol>
-    end
-    @attributes[:headers] = @attributes[:headers].to_h<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@attributes[:headers]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L19" class="js-smell-location">0</a>                  <a href="request.html#L23" class="js-smell-location">1</a>                  <a href="request.html#L27" class="js-smell-location">2</a>                  </div>  </li></ol>
-  end
+			@attributes[:headers] += [el]<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@attributes[:headers]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L24" class="js-smell-location">0</a>                  <a href="request.html#L27" class="js-smell-location">1</a>                  <a href="request.html#L31" class="js-smell-location">2</a>                  </div>  </li></ol>
+		end
 
-  def init_params<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Request#init_params has a flog score of 44</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#init_params has approx 11 statements</span>          </div>  </li></ol>
-    if @attributes[:method] == :get<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:method]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L31" class="js-smell-location">0</a>                  <a href="request.html#L33" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @attributes[:resource], @attributes[:params] = @attributes[:resource].split(&#39;?&#39;)
-    elsif @attributes[:method] == :post<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:method]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L31" class="js-smell-location">0</a>                  <a href="request.html#L33" class="js-smell-location">1</a>                  </div>  </li></ol>
-      @attributes[:params] = @request_arr[@request_arr.length - 1][0] if @request_arr[@request_arr.length - 1] != []<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@request_arr.length - 1' 2 times</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@request_arr.length' 2 times</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@request_arr[@request_arr.length - 1]' 2 times</span>          </div>  </li></ol>
-    else
-      raise &#39;Invalid HTTP method&#39;
-    end
+		@attributes[:headers].each do |arr|<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@attributes[:headers]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L24" class="js-smell-location">0</a>                  <a href="request.html#L27" class="js-smell-location">1</a>                  <a href="request.html#L31" class="js-smell-location">2</a>                  </div>  </li></ol>
+			arr[0].sub! &#39;-&#39;, &#39;_&#39;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls 'arr[0]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L28" class="js-smell-location">0</a>                  <a href="request.html#L29" class="js-smell-location">1</a>                  </div>  </li></ol>
+			arr[0] = arr[0].to_sym<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls 'arr[0]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L28" class="js-smell-location">0</a>                  <a href="request.html#L29" class="js-smell-location">1</a>                  </div>  </li></ol>
+		end
+		@attributes[:headers] = @attributes[:headers].to_h<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_headers calls '@attributes[:headers]' 3 times</span>              <span>Locations:</span>                  <a href="request.html#L24" class="js-smell-location">0</a>                  <a href="request.html#L27" class="js-smell-location">1</a>                  <a href="request.html#L31" class="js-smell-location">2</a>                  </div>  </li></ol>
+	end
 
-    @attributes[:params] = {} if @attributes[:params].nil?<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 6 times</span>              <span>Locations:</span>                  <a href="request.html#L39" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  <a href="request.html#L43" class="js-smell-location">2</a>                  <a href="request.html#L44" class="js-smell-location">3</a>                  <a href="request.html#L45" class="js-smell-location">4</a>                  <a href="request.html#L46" class="js-smell-location">5</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Request#init_params performs a nil-check</span>          </div>  </li></ol>
+	def init_params # rubocop:disable Metrics/AbcSize<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="http://docs.seattlerb.org/flog/" target="_blank"><b>HighComplexity</b></a>        </span>      </div>      <span>Request#init_params has a flog score of 33</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>Request#init_params has approx 7 statements</span>          </div>  </li></ol>
+		case @attributes[:method]
+		when :get
+			@attributes[:resource], @attributes[:params] = @attributes[:resource].split(&#39;?&#39;)
+		when :post
+			@attributes[:params] = @request_arr[@request_arr.length - 1][0] if @request_arr[@request_arr.length - 1] != []<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@request_arr.length - 1' 2 times</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@request_arr.length' 2 times</span>          </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@request_arr[@request_arr.length - 1]' 2 times</span>          </div>  </li></ol>
+		else
+			raise &#39;Invalid HTTP method&#39;
+		end
 
-    return unless @attributes[:params] != {}<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 6 times</span>              <span>Locations:</span>                  <a href="request.html#L39" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  <a href="request.html#L43" class="js-smell-location">2</a>                  <a href="request.html#L44" class="js-smell-location">3</a>                  <a href="request.html#L45" class="js-smell-location">4</a>                  <a href="request.html#L46" class="js-smell-location">5</a>                  </div>  </li></ol>
+		return if @attributes[:params].nil?<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L44" class="js-smell-location">0</a>                  <a href="request.html#L46" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Request#init_params performs a nil-check</span>          </div>  </li></ol>
 
-    @attributes[:params] = @attributes[:params].split(&#39;&amp;&#39;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 6 times</span>              <span>Locations:</span>                  <a href="request.html#L39" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  <a href="request.html#L43" class="js-smell-location">2</a>                  <a href="request.html#L44" class="js-smell-location">3</a>                  <a href="request.html#L45" class="js-smell-location">4</a>                  <a href="request.html#L46" class="js-smell-location">5</a>                  </div>  </li></ol>
-    @attributes[:params] = @attributes[:params].map { |str| str.split(&#39;=&#39;) }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 6 times</span>              <span>Locations:</span>                  <a href="request.html#L39" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  <a href="request.html#L43" class="js-smell-location">2</a>                  <a href="request.html#L44" class="js-smell-location">3</a>                  <a href="request.html#L45" class="js-smell-location">4</a>                  <a href="request.html#L46" class="js-smell-location">5</a>                  </div>  </li></ol>
-    @attributes[:params] = @attributes[:params].each { |arr| arr[0] = arr[0].to_sym }<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 6 times</span>              <span>Locations:</span>                  <a href="request.html#L39" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  <a href="request.html#L43" class="js-smell-location">2</a>                  <a href="request.html#L44" class="js-smell-location">3</a>                  <a href="request.html#L45" class="js-smell-location">4</a>                  <a href="request.html#L46" class="js-smell-location">5</a>                  </div>  </li></ol>
-    @attributes[:params] = @attributes[:params].to_h<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 6 times</span>              <span>Locations:</span>                  <a href="request.html#L39" class="js-smell-location">0</a>                  <a href="request.html#L41" class="js-smell-location">1</a>                  <a href="request.html#L43" class="js-smell-location">2</a>                  <a href="request.html#L44" class="js-smell-location">3</a>                  <a href="request.html#L45" class="js-smell-location">4</a>                  <a href="request.html#L46" class="js-smell-location">5</a>                  </div>  </li></ol>
-  end
+		@attributes[:params] = @attributes[:params]<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Request#init_params calls '@attributes[:params]' 2 times</span>              <span>Locations:</span>                  <a href="request.html#L44" class="js-smell-location">0</a>                  <a href="request.html#L46" class="js-smell-location">1</a>                  </div>  </li></ol>
+		.split(&#39;&amp;&#39;)
+		.map { |str| str.split(&#39;=&#39;) }
+		.each { |arr| arr[0] = arr[0].to_sym }
+		.to_h
+	end
 
-  def method
-    @attributes[:method]
-  end
+	def method
+		@attributes[:method]
+	end
 
-  def resource
-    @attributes[:resource]
-  end
+	def resource
+		@attributes[:resource]
+	end
 
-  def version
-    @attributes[:version]
-  end
+	def version
+		@attributes[:version]
+	end
 
-  def headers
-    @attributes[:headers]
-    # Hash[@headers.map {|el| el.split(&quot;: &quot;)}]
-  end
+	def headers
+		@attributes[:headers]
+	end
 
-  def params
-    @attributes[:params]
-    # Hash[@params.split(&quot;&amp;&quot;).map {|el| el.split(&quot;=&quot;)}]
-  end
+	def params
+		@attributes[:params]
+	end
 end
-
-def printer
-  # r = Request.new(&quot;POST /login HTTP/1.1\nHost: foo.example\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 39\n\nusername=grillkorv&amp;password=verys3cret!&quot;)
-  # r = Request.new(&quot;GET / HTTP/1.1\nHost: developer.mozilla.org\nAccept-Language: fr&quot;)
-  #r = Request.new(&quot;GET /examples HTTP/1.1\nHost: example.com\nUser-Agent: ExampleBrowser/1.0\nAccept-Encoding: gzip, deflate\nAccept: */*&quot;)
-
-  p r.method #==&gt; :post
-  p r.resource #==&gt; &quot;/login&quot;
-  p r.version #==&gt; &quot;HTTP/1.1&quot;
-  p r.headers #==&gt; {:Host=&gt;&quot;foo.example&quot;, :Content_Type=&gt;&quot;application/x-www-form-urlencoded&quot;, :Content_Length=&gt;&quot;39&quot;}
-  p r.params #==&gt; [&quot;username=grillkorv&quot;, &quot;password=verys3cret!&quot;]
-end
-# printer()
 </code>
   </div>
 </div>

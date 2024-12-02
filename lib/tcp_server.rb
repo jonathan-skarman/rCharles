@@ -3,20 +3,20 @@
 require 'socket'
 require_relative 'request'
 
-# router klass så för läsbarhet
+# router klass för läsbarhet
 class Router
 	def initialize
 		@routes = { '/teapot' => './public/teapot.html' }
 	end
 
 	def add_route(resource)
+		route_internal = "./public#{fix_index(resource)}.html"
 		if route_exist?(resource)
 			@routes[resource]
-		elsif resource.nil? || !File.exist?("./public#{fix_index(resource)}.html")
+		elsif resource.nil? || !File.exist?(route_internal)
 			nil
 		else
-			@routes[resource] = "./public#{fix_index(resource)}.html"
-			@routes[resource]
+			@routes[resource] = route_internal
 		end
 	end
 
@@ -61,9 +61,6 @@ class HTTPServer
 			Response.new.send(router.route(request.resource), @session)
 		end
 	end
-
-	# Nedanstående bör göras i er Response-klass # rubocop:disable Layout/CommentIndentation
-		#lättare med annan metod i httpserver, annars måste jag lista ut hur jag flyttar session # rubocop:disable Layout/CommentIndentation,Layout/LeadingCommentSpace
 
 	def terminal_print(data)
 		puts 'RECEIVED REQUEST'
