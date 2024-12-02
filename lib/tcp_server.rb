@@ -42,7 +42,7 @@ class HTTPServer
 		@port = port
 	end
 
-	def start # rubocop:disable Metrics/AbcSize
+	def start
 		server = TCPServer.new(@port)
 		puts "Listening on #{@port}"
 		router = Router.new
@@ -58,21 +58,12 @@ class HTTPServer
 			request = Request.new(data)
 			router.add_route(request.resource) # if don't have route, add route
 
-			html, status = Response.new.send(router.route(request.resource))
-
-			session_response(status, html)
+			Response.new.send(router.route(request.resource), @session)
 		end
 	end
 
 	# Nedanstående bör göras i er Response-klass # rubocop:disable Layout/CommentIndentation
 		#lättare med annan metod i httpserver, annars måste jag lista ut hur jag flyttar session # rubocop:disable Layout/CommentIndentation,Layout/LeadingCommentSpace
-	def session_response(status, html)
-		@session.print "HTTP/1.1 #{status}\r\n"
-		@session.print "Content-Type: text/html\r\n"
-		@session.print "\r\n"
-		@session.print html
-		@session.close
-	end
 
 	def terminal_print(data)
 		puts 'RECEIVED REQUEST'
@@ -86,9 +77,9 @@ end
 class Response
 	def initialize; end # rubocop:disable Style/RedundantInitialize
 
-	def send(route)
+	def send(route, session)
 		html, status = html_status(route)
-		[html, status]
+		session_response(status, html, session)
 	end
 
 	private
@@ -102,6 +93,14 @@ class Response
 			status = '200'
 		end
 		[html, status]
+	end
+
+	def session_response(status, html, session)
+		session.print "HTTP/1.1 #{status}\r\n"
+		session.print "Content-Type: text/html\r\n"
+		session.print "\r\n"
+		session.print html
+		session.close
 	end
 end
 
