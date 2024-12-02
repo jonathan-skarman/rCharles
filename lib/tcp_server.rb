@@ -6,14 +6,14 @@ require_relative 'request'
 # router klass så för läsbarhet
 class Router
 	def initialize
-		@routes = {}
+		@routes = { '/teapot' => './public/teapot.html' }
 	end
 
 	def add_route(resource)
-		if resource.nil? || !File.exist?("./public#{fix_index(resource)}.html")
-			nil
-		elsif route_exist?(resource)
+		if route_exist?(resource)
 			@routes[resource]
+		elsif resource.nil? || !File.exist?("./public#{fix_index(resource)}.html")
+			nil
 		else
 			@routes[resource] = "./public#{fix_index(resource)}.html"
 			@routes[resource]
@@ -85,7 +85,10 @@ class Response
 	private
 
 	def html_status(route)
-		if route.nil?
+		if route == './public/teapot.html'
+			html = '<h1>418 I am a teapot</h1>'
+			status = '418'
+		elsif route.nil?
 			html = '<h1>404 Not Found</h1>'
 			status = '404'
 		else
