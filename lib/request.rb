@@ -51,22 +51,22 @@ class Request
 	end
 
 	def method
-		@attributes[:method]
+		@method ||= @attributes[:method]
 	end
 
 	def resource
-		@attributes[:resource]
+		@resource ||= @attributes[:resource]
 	end
 
 	def version
-		@attributes[:version]
+		@version ||= @attributes[:version]
 	end
 
 	def headers
-		@attributes[:headers]
+		@headers ||= @attributes[:headers]
 	end
 
 	def params
-		@attributes[:params]
+		@params ||= @attributes[:params]
 	end
 end
