@@ -6,11 +6,11 @@ require_relative 'request'
 # router klass för läsbarhet
 class Router
 	def initialize
-		@routes = { '/teapot' => './public/teapot.html' }
+		@routes = { '/teapot' => './public/teapot.html', '/' => './public/index.html' }
 	end
 
 	def add_route(resource)
-		route_internal = "./public#{fix_index(resource)}.html"
+		route_internal = "./public#{resource}.html"
 		if route_exist?(resource)
 			@routes[resource]
 		elsif resource.nil? || !File.exist?(route_internal)
@@ -28,11 +28,6 @@ class Router
 
 	def route_exist?(resource)
 		@routes.key?(resource)
-	end
-
-	def fix_index(resource)
-		resource = '/index' if resource == '/'
-		resource
 	end
 end
 
