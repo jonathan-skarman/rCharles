@@ -1,6 +1,0 @@
-formaterat:
-linux = cmd
-
-ls = dir
-cd = cd
-clear = cls
