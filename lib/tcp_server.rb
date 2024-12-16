@@ -42,7 +42,7 @@ class HTTPServer
 		@port = port
 	end
 
-	def start
+	def start # rubocop:disable Metrics/AbcSize
 		server = TCPServer.new(@port)
 		puts "Listening on #{@port}"
 		router = Router.new
@@ -52,6 +52,9 @@ class HTTPServer
 			while line = @session.gets and line !~ /^\s*$/ # rubocop:disable Lint/AssignmentInCondition,Style/AndOr
 				data += line
 			end
+
+			Response.new.session_response('400', '<h1>400 bad request</h1>', @session) if data.nil?
+			p 'FUCK VARFOR INGEN DATA WTF' if data.nil?
 
 			terminal_print(data)
 
@@ -67,6 +70,11 @@ class HTTPServer
 		puts '-' * 40
 		puts data
 		puts '-' * 40
+	end
+
+	def stop
+		@server&.close
+    puts "Server stopped."
 	end
 end
 

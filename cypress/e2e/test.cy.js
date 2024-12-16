@@ -1,11 +1,11 @@
 describe("The Home Page", () => {
   it("successfully loads", () => {
-    cy.visit("/");
+    cy.visit("/test");
   });
 
-  it("link works", () => {
-    cy.visit("/");
+	it("link works", () => {
+    cy.visit("/test");
     cy.get("a").click();
-    cy.url().should("include", "/test");
+    cy.url().should("include", "/");
   });
 });

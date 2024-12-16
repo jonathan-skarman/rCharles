@@ -1,7 +1,7 @@
-require_relative 'spec_helper'
+require_relative 'spec_helper' # rubocop:disable Layout/EndOfLine
 require_relative '../lib/request'
 
-describe 'Request' do
+describe 'Request' do # rubocop:disable Metrics/BlockLength
 	describe 'Simple get-request' do
 		it 'parses the http method' do
 			@request = Request.new(File.read('./spec/example_requests/get-index.request.txt'))
