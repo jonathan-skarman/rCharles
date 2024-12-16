@@ -42,19 +42,13 @@ class HTTPServer
 		@port = port
 	end
 
-	def start # rubocop:disable Metrics/AbcSize
+	def start
 		server = TCPServer.new(@port)
 		puts "Listening on #{@port}"
 		router = Router.new
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
-			data = ''
-			while line = @session.gets and line !~ /^\s*$/ # rubocop:disable Lint/AssignmentInCondition,Style/AndOr
-				data += line
-			end
-
-			Response.new.session_response('400', '<h1>400 bad request</h1>', @session) if data.nil?
-			p 'FUCK VARFOR INGEN DATA WTF' if data.nil?
+			data = parse_data(@session)
 
 			terminal_print(data)
 
@@ -65,6 +59,8 @@ class HTTPServer
 		end
 	end
 
+	private
+
 	def terminal_print(data)
 		puts 'RECEIVED REQUEST'
 		puts '-' * 40
@@ -72,9 +68,18 @@ class HTTPServer
 		puts '-' * 40
 	end
 
-	def stop
-		@server&.close
-    puts "Server stopped."
+	def parse_data(session)
+		data = ''
+		while line = session.gets and line !~ /^\s*$/ # rubocop:disable Lint/AssignmentInCondition,Style/AndOr
+			data += line
+		end
+
+		if data.nil?
+			Response.new.session_response('400', '<h1>400 bad request</h1>', @session)
+			raise 'ingen data i request'
+		end
+
+		data
 	end
 end
 
