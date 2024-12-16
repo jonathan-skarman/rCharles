@@ -68,15 +68,15 @@
           </div>
           <div class="code-statistics col-md-11">
             <div class="col-md-3">
-              <div><span class="metric">107</span><small> lines of codes</small></div>
+              <div><span class="metric">116</span><small> lines of codes</small></div>
               <div><span class="metric">12</span><small> methods</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">5.5</span><small> complexity/method</small></div>
-              <div><span class="metric">6</span><small> churn</small></div>
+              <div><span class="metric">5.7</span><small> complexity/method</small></div>
+              <div><span class="metric">10</span><small> churn</small></div>
             </div>
             <div class="col-md-3">
-              <div><span class="metric">66.47</span><small> complexity</small></div>
+              <div><span class="metric">68.45</span><small> complexity</small></div>
               <div><span class="metric">0</span><small> duplications</small></div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <li><a href="#" id="toggle-code" class="toggle-button button">code</a></li>
             <li class="active">
               <a href="#" id="toggle-smells" class="toggle-button button">
-                12
+                11
                 smells
               </a>
             </li>
@@ -105,16 +105,17 @@ require_relative &#39;request&#39;
 # router klass för läsbarhet
 class Router
 	def initialize
-		@routes = { &#39;/teapot&#39; =&gt; &#39;./public/teapot.html&#39; }
+		@routes = { &#39;/teapot&#39; =&gt; &#39;./public/teapot.html&#39;, &#39;/&#39; =&gt; &#39;./public/index.html&#39; }
 	end
 
 	def add_route(resource)
+		route_internal = &quot;./public#{resource}.html&quot;
 		if route_exist?(resource)
 			@routes[resource]
-		elsif resource.nil? || !File.exist?(&quot;./public#{fix_index(resource)}.html&quot;)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Router#add_route calls 'fix_index(resource)' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L15" class="js-smell-location">0</a>                  <a href="tcp_server.html#L18" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Router#add_route performs a nil-check</span>          </div>  </li></ol>
+		elsif resource.nil? || !File.exist?(route_internal)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>Router#add_route performs a nil-check</span>          </div>  </li></ol>
 			nil
 		else
-			@routes[resource] = &quot;./public#{fix_index(resource)}.html&quot;<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>Router#add_route calls 'fix_index(resource)' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L15" class="js-smell-location">0</a>                  <a href="tcp_server.html#L18" class="js-smell-location">1</a>                  </div>  </li></ol>
+			@routes[resource] = route_internal
 		end
 	end
 
@@ -127,11 +128,6 @@ class Router
 	def route_exist?(resource)
 		@routes.key?(resource)
 	end
-
-	def fix_index(resource)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Utility-Function.md" target="_blank"><b>UtilityFunction</b></a>        </span>      </div>      <span>Router#fix_index doesn't depend on instance state (maybe move it to another class?)</span>          </div>  </li></ol>
-		resource = &#39;/index&#39; if resource == &#39;/&#39;
-		resource
-	end
 end
 
 # sluta klaga rubocop
@@ -140,31 +136,44 @@ class HTTPServer<ol class="nocode errors smells">  <li>    <div class="descripti
 		@port = port
 	end
 
-	def start<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>HTTPServer#start has approx 9 statements</span>          </div>  </li></ol>
+	def start<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Too-Many-Statements.md" target="_blank"><b>TooManyStatements</b></a>        </span>      </div>      <span>HTTPServer#start has approx 8 statements</span>          </div>  </li></ol>
 		server = TCPServer.new(@port)
 		puts &quot;Listening on #{@port}&quot;
 		router = Router.new
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
-			data = &#39;&#39;
-			while line = @session.gets and line !~ /^\s*$/ # rubocop:disable Lint/AssignmentInCondition,Style/AndOr
-				data += line
-			end
+			data = parse_data(@session)
 
 			terminal_print(data)
 
 			request = Request.new(data)
-			router.add_route(request.resource) # if don&#39;t have route, add route<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#start calls 'request.resource' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L58" class="js-smell-location">0</a>                  <a href="tcp_server.html#L60" class="js-smell-location">1</a>                  </div>  </li></ol>
+			router.add_route(request.resource) # if don&#39;t have route, add route<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#start calls 'request.resource' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L51" class="js-smell-location">0</a>                  <a href="tcp_server.html#L53" class="js-smell-location">1</a>                  </div>  </li></ol>
 
-			Response.new.send(router.route(request.resource), @session)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#start calls 'request.resource' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L58" class="js-smell-location">0</a>                  <a href="tcp_server.html#L60" class="js-smell-location">1</a>                  </div>  </li></ol>
+			Response.new.send(router.route(request.resource), @session)<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#start calls 'request.resource' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L51" class="js-smell-location">0</a>                  <a href="tcp_server.html#L53" class="js-smell-location">1</a>                  </div>  </li></ol>
 		end
 	end
 
+	private
+
 	def terminal_print(data)
 		puts &#39;RECEIVED REQUEST&#39;
-		puts &#39;-&#39; * 40<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls ''-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L66" class="js-smell-location">0</a>                  <a href="tcp_server.html#L68" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls 'puts '-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L66" class="js-smell-location">0</a>                  <a href="tcp_server.html#L68" class="js-smell-location">1</a>                  </div>  </li></ol>
+		puts &#39;-&#39; * 40<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls ''-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L61" class="js-smell-location">0</a>                  <a href="tcp_server.html#L63" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls 'puts '-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L61" class="js-smell-location">0</a>                  <a href="tcp_server.html#L63" class="js-smell-location">1</a>                  </div>  </li></ol>
 		puts data
-		puts &#39;-&#39; * 40<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls ''-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L66" class="js-smell-location">0</a>                  <a href="tcp_server.html#L68" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls 'puts '-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L66" class="js-smell-location">0</a>                  <a href="tcp_server.html#L68" class="js-smell-location">1</a>                  </div>  </li></ol>
+		puts &#39;-&#39; * 40<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls ''-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L61" class="js-smell-location">0</a>                  <a href="tcp_server.html#L63" class="js-smell-location">1</a>                  </div>  </li>  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Duplicate-Method-Call.md" target="_blank"><b>DuplicateMethodCall</b></a>        </span>      </div>      <span>HTTPServer#terminal_print calls 'puts '-' * 40' 2 times</span>              <span>Locations:</span>                  <a href="tcp_server.html#L61" class="js-smell-location">0</a>                  <a href="tcp_server.html#L63" class="js-smell-location">1</a>                  </div>  </li></ol>
+	end
+
+	def parse_data(session)
+		data = &#39;&#39;
+		while line = session.gets and line !~ /^\s*$/ # rubocop:disable Lint/AssignmentInCondition,Style/AndOr
+			data += line
+		end
+
+		if data.nil?<ol class="nocode errors smells">  <li>    <div class="description">      <div class="heading">        <span>          <i class="fa fa-warning" aria-hidden="true"></i>          <a href="https://github.com/troessner/reek/blob/master/docs/Nil-Check.md" target="_blank"><b>NilCheck</b></a>        </span>      </div>      <span>HTTPServer#parse_data performs a nil-check</span>          </div>  </li></ol>
+			Response.new.session_response(&#39;400&#39;, &#39;&lt;h1&gt;400 bad request&lt;/h1&gt;&#39;, @session)
+			raise &#39;ingen data i request&#39;
+		end
+
+		data
 	end
 end
 
