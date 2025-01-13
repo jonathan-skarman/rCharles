@@ -1,7 +1,11 @@
-require_relative 'main.rb'
+require_relative '../main.rb'
 startup()
 
 get ('/') do
+  html('index.html')
+end
+
+get ('/index') do
   html('index.html')
 end
 

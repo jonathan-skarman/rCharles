@@ -17,7 +17,7 @@ class Router
 	end
 
 	def route(resource)
-		@routes[resource]
+		@routes_html[resource]
 	end
 
 	private
@@ -26,7 +26,7 @@ class Router
 		@routes.key?(resource)
 	end
 
-	def add_route_get(route_file, i)
+	def add_route_get(route_file, i) # rubocop:disable Metrics/AbcSize
 		if route_file[i + 1][2..5] == 'html'
 			route = route_file[i][6..(route_file[i].length - 6)]
 			resource = route_file[i + 1][8..(route_file[i + 1].length - 3)]

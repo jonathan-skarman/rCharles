@@ -3,7 +3,6 @@
 require 'socket'
 require_relative 'request'
 require_relative 'router'
-require_relative ''
 
 # sluta klaga rubocop
 class HTTPServer
@@ -22,7 +21,6 @@ class HTTPServer
 			terminal_print(data)
 
 			request = Request.new(data)
-			router.add_route(request.resource) # if don't have route, add route
 
 			Response.new.send(router.route(request.resource), @session)
 		end
