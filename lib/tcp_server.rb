@@ -2,34 +2,8 @@
 
 require 'socket'
 require_relative 'request'
-
-# router klass för läsbarhet
-class Router
-	def initialize
-		@routes = { '/teapot' => './public/teapot.html', '/' => './public/index.html' }
-	end
-
-	def add_route(resource)
-		route_internal = "./public#{resource}.html"
-		if route_exist?(resource)
-			@routes[resource]
-		elsif resource.nil? || !File.exist?(route_internal)
-			nil
-		else
-			@routes[resource] = route_internal
-		end
-	end
-
-	def route(resource)
-		@routes[resource]
-	end
-
-	private
-
-	def route_exist?(resource)
-		@routes.key?(resource)
-	end
-end
+require_relative 'router'
+require_relative ''
 
 # sluta klaga rubocop
 class HTTPServer
@@ -40,7 +14,7 @@ class HTTPServer
 	def start
 		server = TCPServer.new(@port)
 		puts "Listening on #{@port}"
-		router = Router.new
+		router = Router.new # give the app.rb file to the router
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
 			data = parse_data(@session)
@@ -90,7 +64,7 @@ class Response
 	private
 
 	def html_status(route)
-		if route == './public/teapot.html'
+		if route == './test_server/public/teapot.html'
 			html = '<h1>418 I am a teapot</h1>'
 			status = '418'
 		elsif route.nil?
