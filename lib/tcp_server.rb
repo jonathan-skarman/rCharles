@@ -3,6 +3,7 @@
 require 'socket'
 require_relative 'request'
 require_relative 'router'
+require_relative 'response'
 
 # sluta klaga rubocop
 class HTTPServer
