@@ -3,47 +3,52 @@
 # router klass för läsbarhet
 class Router
 	def initialize
-		@routes_html = {}
-		@routes_slim = {}
-		route_file = File.read('../test_server/app.rb').split("\n")
-
-		i = 0
-		while i < route_file.length
-			if route_file[i][0..2] == 'get' # rubocop:disable Style/IfUnlessModifier
-				add_route_get(route_file, i)
-			end
-			i += 1
-		end
+		@routes = {}
+		@route_file = File.read('../test_server/app.rb').split("\n")
 	end
 
-	def route(resource)
-		@routes_html[resource]
+	# takes method and resource and returns file adress for resource
+	def route(method, resource)
+		return "public#{resource}" if resource.include?('.css')
+
+		line_num = find_route(method, resource)
+
+		if line_num.nil?
+			'404'
+		else
+			find_resource(line_num)
+		end
 	end
 
 	private
 
-	def route_exist?(resource)
-		@routes.key?(resource)
-	end
+	def find_route(method, resource)
+		i = 0
+		while i < @route_file.length
+			return i if @route_file[i][0..2] == method[0..2] && @route_file[i][6..(5 + resource.length)] == resource
 
-	def add_route_get(route_file, i) # rubocop:disable Metrics/AbcSize
-		if route_file[i + 1][2..5] == 'html'
-			route = route_file[i][6..(route_file[i].length - 6)]
-			resource = route_file[i + 1][8..(route_file[i + 1].length - 3)]
-			add_route_html(route, resource)
-		elsif route_file[i + 1][2..5] == 'slim'
-			route = route_file[i][6..(route_file[i].length - 6)]
-			resource = route_file[i + 1][8..(route_file[i + 1].length - 3)]
-			add_route_slim(route, resource)
+			i += 1
 		end
+		p '404 route not found in app.rb'
+		nil
 	end
 
-	def add_route_html(route, resource)
-		@routes_html[route] = "public/#{resource}"
-	end
+	def find_resource(line) # rubocop:disable Metrics/AbcSize
+		while line < @route_file.length
+			if @route_file[line][2..5] == 'html'
+				x = "public/#{@route_file[line][8..(@route_file[line].length - 3)]}.html"
+				p x
+				return x
+			elsif @route_file[line][2..5] == 'slim'
+				x = "views/#{@route_file[line][8..(@route_file[line].length - 3)]}.slim"
+				p x
+				return x
+			end
 
-	def add_route_slim(route, resource)
-		@routes_slim[route] = "views/#{resource}"
+			line += 1
+		end
+		p '404 resource not found'
+		nil
 	end
 end
 

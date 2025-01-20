@@ -2,17 +2,17 @@ require_relative '../main.rb'
 startup()
 
 get ('/') do
-  html('index.html')
+  html('index')
 end
 
 get ('/index') do
-  html('index.html')
+  html('index')
 end
 
 get ('/test') do
-  html('test.html')
+  html('test')
 end
 
 get ('/test2') do
-  slim('test2.slim')
+  slim('test2')
 end
