@@ -3,7 +3,7 @@
 # router klass för läsbarhet
 class Router
 	def initialize
-		@routes = {}
+		# routes = {}
 		@route_file = File.read('../test_server/app.rb').split("\n")
 	end
 
