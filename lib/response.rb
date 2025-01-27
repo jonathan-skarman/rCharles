@@ -22,9 +22,7 @@ class Response
 			status = '200'
 			content_type = 'text/css'
 		elsif route.include?('.slim')
-			layout_template = Slim::Template.new('views/layout.slim')
-			content_template = Slim::Template.new(route)
-			content = layout_template.render { content_template.render } # makes layout and routed slim files work
+			content = Slim::Template.new('views/layout.slim').render { Slim::Template.new(route).render }
 			status = '200'
 			content_type = 'text/html'
 		elsif route.include?('.html')
@@ -32,7 +30,9 @@ class Response
 			status = '200'
 			content_type = 'text/html'
 		else
-			raise 'invalid route in status method, in response class'
+			content = '<h1>404 File type Not Found</h1><p>response class, status method</p>'
+			status = '404'
+			content_type = 'text/html'
 		end
 		[content, status, content_type]
 	end
