@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'lib/tcp_server'
+require_relative 'tcp_server'
+require 'slim'
 
 def startup()
   server = HTTPServer.new(4567)

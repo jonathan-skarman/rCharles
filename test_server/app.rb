@@ -1,4 +1,4 @@
-require_relative '../main.rb'
+require_relative '../lib/main.rb'
 startup()
 
 get ('/') do

@@ -14,7 +14,13 @@ class Response
 			css = File.read(route)
 			session_response_css(status, css, session)
 		else
-			html, status = html_status(route)
+			if route.include?('.slim')
+				html, status = slim_status(route)
+			elsif route.include?('.html')
+				html, status = html_status(route)
+			else
+				raise 'invalid route - neither html nor slim'
+			end
 			session_response_html(status, html, session)
 		end
 	end
@@ -23,6 +29,14 @@ class Response
 
 	def html_status(route)
 		html = File.read(route)
+		status = '200'
+		[html, status]
+	end
+
+	def slim_status(route)
+		layout_template = Slim::Template.new('views/layout.slim')
+		content_template = Slim::Template.new(route)
+		html = layout_template.render { content_template.render } # makes layout and routed slim files work
 		status = '200'
 		[html, status]
 	end
