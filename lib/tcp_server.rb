@@ -7,14 +7,14 @@ require_relative 'response'
 
 # sluta klaga rubocop
 class HTTPServer
-	def initialize(port)
+	def initialize(port, router)
 		@port = port
+		@router = router
 	end
 
-	def start
+	def start # rubocop:disable Metrics/AbcSize
 		server = TCPServer.new(@port)
 		puts "Listening on #{@port}"
-		router = Router.new # give the app.rb file to the router
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
 			data = parse_data(@session)
@@ -23,8 +23,27 @@ class HTTPServer
 
 			request = Request.new(data)
 
-			Response.new.send(router.route(request.method, request.resource), @session)
+			block = @router.route(request.method, request.resource)
+			p block
+			if block.nil?
+				route = @router.file_route(request.resource)
+				if route.nil?
+					Response.new.send('404', @session)
+				else
+					Response.new.send(route, @session)
+				end
+			else
+				block.call # calls the block from the route defined in app.rb
+			end
 		end
+	end
+
+	def html(resource)
+		Response.new.send_html(resource, @session)
+	end
+
+	def slim(resource)
+		Response.new.send_slim(resource, @session)
 	end
 
 	private

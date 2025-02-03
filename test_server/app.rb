@@ -1,18 +1,29 @@
 require_relative '../lib/main.rb'
-startup()
 
-get ('/') do
-  html('index')
+
+class App
+  router = Router.new
+  server = HTTPServer.new(4567, router)
+
+  router.get('/') do
+    server.html('index')
+  end
+
+  router.get('/index') do
+    server.html('index')
+  end
+
+  router.get('/test') do
+    server.html('test')
+  end
+
+  router.get('/test2') do
+    server.slim('test2')
+  end
+
+
+  p 'starting server'
+  startup(router, server)
 end
 
-get ('/index') do
-  html('index')
-end
-
-get ('/test') do
-  html('test')
-end
-
-get ('/test2') do
-  slim('test2')
-end
+App.run
