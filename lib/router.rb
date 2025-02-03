@@ -16,10 +16,13 @@ class Router
 
 	def file_route(resource)
 		if File.exist?("public/#{resource}")
-			"public/#{resource}"
+			return "public/#{resource}"
+		elsif File.exist?("public#{resource}")
+			return "public#{resource}"
 		elsif File.exist?("public/#{resource}.html")
-			"public/#{resource}.html"
+			return "public/#{resource}.html"
 		end
+
 		nil
 	end
 

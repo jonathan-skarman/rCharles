@@ -24,17 +24,18 @@ class HTTPServer
 			request = Request.new(data)
 
 			block = @router.route(request.method, request.resource)
-			p block
-			if block.nil?
+
+			if !block.nil? # rubocop:disable Style/NegatedIfElseCondition
+				block.call # calls the block from the route defined in app.rb
+			else
 				route = @router.file_route(request.resource)
 				if route.nil?
 					Response.new.send('404', @session)
 				else
 					Response.new.send(route, @session)
 				end
-			else
-				block.call # calls the block from the route defined in app.rb
 			end
+
 		end
 	end
 
