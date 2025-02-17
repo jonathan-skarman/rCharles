@@ -7,5 +7,6 @@ require_relative 'tcp_server'
 require 'slim'
 
 def startup(router, server)
+  p 'starting server'
   server.start
 end
