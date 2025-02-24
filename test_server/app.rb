@@ -21,7 +21,7 @@ class App
     server.slim('test2')
   end
 
-  startup(router, server)
+  server.start
 end
 
 App.run

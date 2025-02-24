@@ -17,6 +17,28 @@ class Request
 		init_params
 	end
 
+	def method
+		@method ||= @attributes[:method]
+	end
+
+	def resource
+		@resource ||= @attributes[:resource]
+	end
+
+	def version
+		@version ||= @attributes[:version]
+	end
+
+	def headers
+		@headers ||= @attributes[:headers]
+	end
+
+	def params
+		@params ||= @attributes[:params]
+	end
+
+	private
+
 	def init_headers
 		@request_arr.each do |el|
 			break if el == []
@@ -48,25 +70,5 @@ class Request
 		.map { |str| str.split('=') }
 		.each { |arr| arr[0] = arr[0].to_sym }
 		.to_h
-	end
-
-	def method
-		@method ||= @attributes[:method]
-	end
-
-	def resource
-		@resource ||= @attributes[:resource]
-	end
-
-	def version
-		@version ||= @attributes[:version]
-	end
-
-	def headers
-		@headers ||= @attributes[:headers]
-	end
-
-	def params
-		@params ||= @attributes[:params]
 	end
 end

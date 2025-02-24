@@ -12,7 +12,7 @@ class HTTPServer
 		@router = router
 	end
 
-	def start # rubocop:disable Metrics/AbcSize
+	def start
 		server = TCPServer.new(@port)
 		puts "Listening on #{@port}"
 
@@ -27,24 +27,31 @@ class HTTPServer
 
 			if !block.nil? # rubocop:disable Style/NegatedIfElseCondition
 				block.call # calls the block from the route defined in app.rb
-			else
-				route = @router.file_route(request.resource)
-				if route.nil?
-					Response.new.send('404', @session)
-				else
-					Response.new.send(route, @session)
-				end
+			else # will never catch slim files here
+				file_read_respond(request.resource)
 			end
-
 		end
 	end
 
+	def file_read_respond(resource)
+		route = @router.file_route(resource)
+		if binary_content?(resource.split('.').last) # rubocop:disable Style/ConditionalAssignment
+			body = File.binread(route)
+		else
+			body = File.read(route)
+		end
+
+		Response.new.send_2(body, route, @session)
+	end
+
 	def html(resource)
-		Response.new.send_html(resource, @session)
+		file_read_respond(resource)
 	end
 
 	def slim(resource)
-		Response.new.send_slim(resource, @session)
+		route = "views/#{resource}.slim"
+		body = Slim::Template.new('views/layout.slim').render { Slim::Template.new("views/#{resource}.slim").render }
+		Response.new.send_2(body, route, @session)
 	end
 
 	private

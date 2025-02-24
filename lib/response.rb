@@ -5,36 +5,38 @@ class Response # rubocop:disable Metrics/ClassLength
 	def initialize; end # rubocop:disable Style/RedundantInitialize
 
 	def send(route, session)
+		puts '-' * 80
+		puts 'problem, ska inte använda denna metoden'
+		puts '-' * 80
 		content, headers, status, = status(route)
 		session_response(status, headers, content, session)
 	end
 
-	def send_html(route, session)
-		content = File.read("public/#{route}.html")
-		status = '200'
-		headers = headers('html', content)
-		session_response(status, headers, content, session)
-	end
-
-	def send_slim(route, session)
-		content = Slim::Template.new('views/layout.slim').render { Slim::Template.new("views/#{route}.slim").render }
-		status = '200'
-		headers = headers('html', content)
-		session_response(status, headers, content, session)
+	def send_2(body, route, session) # rubocop:disable Naming/VariableNumber
+		if body.nil? # rubocop:disable Style/ConditionalAssignment
+			status = '404'
+			body = '<h1>404 Not Found</h1>'
+			headers = headers('html', body)
+		else
+			status = '200'
+			headers = headers(route, body)
+		end
+		session_response(status, headers, body, session)
 	end
 
 	private
 
 	# ja den är alldeles för lång, men liksom, det är en bara en if else. får skriva om någon annan gång
 	def status(route) # rubocop:disable Metrics/AbcSize
-		if route == '404'
+		if route.nil?
 			content = '<h1>404 Not Found</h1>'
 			status = '404'
 			headers = headers('html', content)
 
 		else
+
 			key = route.split('.').last
-			if binary_response?(key) # rubocop:disable Style/ConditionalAssignment
+			if binary_content?(key) # rubocop:disable Style/ConditionalAssignment
 				content = File.binread(route)
 			else
 				content = File.read(route)
@@ -51,7 +53,7 @@ class Response # rubocop:disable Metrics/ClassLength
 		[content, headers, status]
 	end
 
-	def session_response(status, headers, content, session) # rubocop:disable Metrics/AbcSize
+	def session_response(status, headers, body, session) # rubocop:disable Metrics/AbcSize
 		puts '-' * 40
 		puts 'RESPONSE'
 		puts '-' * 40
@@ -67,12 +69,12 @@ class Response # rubocop:disable Metrics/ClassLength
 		puts "\r\n"
 		session.print "\r\n"
 
-		if binary_response?(headers[2].split(':').last.split('/').last)
+		if binary_content?(headers[2].split(':').last.split('/').last)
 			puts 'binary content'
 		else
-			puts content
+			puts body
 		end
-		session.print content
+		session.print body
 
 		puts '-' * 40
 		session.close
@@ -82,6 +84,7 @@ class Response # rubocop:disable Metrics/ClassLength
 	def mime(key) # rubocop:disable Metrics/MethodLength
 		@mime = {
 			'html' => 'text/html',
+			'htm' => 'text/html',
 			'css' => 'text/css',
 			'js' => 'text/javascript',
 			'json' => 'application/json',
@@ -108,22 +111,22 @@ class Response # rubocop:disable Metrics/ClassLength
 		@mime[key]
 	end
 
-	def headers(key, content)
+	def headers(route, body)
+		key = route.split('.').last
 		headers = []
 		headers << 'Server: Ruby HTTP Server'
 		headers << 'Connection: close'
 		headers << "Content-Type: #{mime(key)}"
-		if binary_response?(key)
+		if binary_content?(key)
 			headers << 'Content-Transfer-Encoding: binary'
 			headers << 'Accept-Ranges: bytes'
-			headers << "Content-Length: #{content.bytesize}"
+			headers << "Content-Length: #{body.bytesize}"
 		end
 
 		headers
 	end
+end
 
-	# skriven här nere så jag kan skriva om logiken lättare senare om fler filtyper ska läsas in binärt, för jag vete fan vilka som behöver det nu medans jag skriver denna # rubocop:disable Layout/LineLength
-	def binary_response?(key)
+	def binary_content?(key)
 		%w[jpg jpeg png gif svg ico pdf zip tar mp3 wav mp4 avi woff woff2 ttf eot].include?(key)
 	end
-end
