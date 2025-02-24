@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # respons klass så HTTPserver klassen blir läsbar alls
-class Response
-	def initialize; end
+class Response # rubocop:disable Metrics/ClassLength
+	def initialize; end # rubocop:disable Style/RedundantInitialize
 
 	def send(route, session)
 		content, headers, status, = status(route)
@@ -26,7 +26,7 @@ class Response
 	private
 
 	# ja den är alldeles för lång, men liksom, det är en bara en if else. får skriva om någon annan gång
-	def status(route)
+	def status(route) # rubocop:disable Metrics/AbcSize
 		if route == '404'
 			content = '<h1>404 Not Found</h1>'
 			status = '404'

@@ -4,7 +4,6 @@
 class Request
 	def initialize(request) # rubocop:disable Metrics/AbcSize
 		@request_arr = request.split("\n").map { |el| el.split(': ') }
-		# p @request_arr
 		@request_arr[0] = @request_arr[0][0].split
 		@attributes = {
 			method: @request_arr[0].shift.downcase.to_sym,

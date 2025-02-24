@@ -50,6 +50,7 @@ class HTTPServer
 	private
 
 	def terminal_print(data)
+		puts '-' * 40
 		puts 'RECEIVED REQUEST'
 		puts '-' * 40
 		puts data
