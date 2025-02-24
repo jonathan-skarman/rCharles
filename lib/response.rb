@@ -4,15 +4,7 @@
 class Response # rubocop:disable Metrics/ClassLength
 	def initialize; end # rubocop:disable Style/RedundantInitialize
 
-	def send(route, session)
-		puts '-' * 80
-		puts 'problem, ska inte använda denna metoden'
-		puts '-' * 80
-		content, headers, status, = status(route)
-		session_response(status, headers, content, session)
-	end
-
-	def send_2(body, route, session) # rubocop:disable Naming/VariableNumber
+	def send(body, route, session) # rubocop:disable Naming/VariableNumber
 		if body.nil? # rubocop:disable Style/ConditionalAssignment
 			status = '404'
 			body = '<h1>404 Not Found</h1>'
@@ -25,33 +17,6 @@ class Response # rubocop:disable Metrics/ClassLength
 	end
 
 	private
-
-	# ja den är alldeles för lång, men liksom, det är en bara en if else. får skriva om någon annan gång
-	def status(route) # rubocop:disable Metrics/AbcSize
-		if route.nil?
-			content = '<h1>404 Not Found</h1>'
-			status = '404'
-			headers = headers('html', content)
-
-		else
-
-			key = route.split('.').last
-			if binary_content?(key) # rubocop:disable Style/ConditionalAssignment
-				content = File.binread(route)
-			else
-				content = File.read(route)
-			end
-			status = '200'
-			headers = headers(key, content)
-
-			if content.nil? || status.nil? || headers.nil?
-				content = '<h1>404 File type Not Found</h1><p>in response class, in the status method</p>'
-				status = '404'
-				headers = headers('html', content)
-			end
-		end
-		[content, headers, status]
-	end
 
 	def session_response(status, headers, body, session) # rubocop:disable Metrics/AbcSize
 		puts '-' * 40

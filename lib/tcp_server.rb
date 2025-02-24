@@ -41,7 +41,7 @@ class HTTPServer
 			body = File.read(route)
 		end
 
-		Response.new.send_2(body, route, @session)
+		Response.new.send(body, route, @session)
 	end
 
 	def html(resource)
@@ -51,7 +51,7 @@ class HTTPServer
 	def slim(resource)
 		route = "views/#{resource}.slim"
 		body = Slim::Template.new('views/layout.slim').render { Slim::Template.new("views/#{resource}.slim").render }
-		Response.new.send_2(body, route, @session)
+		Response.new.send(body, route, @session)
 	end
 
 	private
