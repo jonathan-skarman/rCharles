@@ -18,27 +18,29 @@ class HTTPServer
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
 			data = parse_data(@session)
-
 			terminal_print(data)
-
 			request = Request.new(data)
 
-			block = @router.route(request.method, request.resource)
+			route = route_from_resource(request.resource)
+			params_info, block = @router.route(request.method, route)
+			@params = params_definer(params_info, request.resource)
 
 			if !block.nil? # rubocop:disable Style/NegatedIfElseCondition
 				block.call # calls the block from the route defined in app.rb
 			else # will never catch slim files here
-				file_read_respond(request.resource)
+				file_read_respond(route)
 			end
 		end
 	end
 
-	def file_read_respond(resource)
-		route = @router.file_route(resource)
-		if binary_content?(resource.split('.').last) # rubocop:disable Style/ConditionalAssignment
-			body = File.binread(route)
+	def file_read_respond(route_ish)
+		fileRoute = @router.file_route(route_ish)
+		if fileRoute.nil? # rubocop:disable Style/ConditionalAssignment
+			body = nil
+		elsif binary_content?(resource.split('.').last)
+			body = File.binread(fileRoute)
 		else
-			body = File.read(route)
+			body = File.read(fileRoute)
 		end
 
 		Response.new.send(body, route, @session)
@@ -55,6 +57,31 @@ class HTTPServer
 	end
 
 	private
+
+		def params_definer(params_info, resource)
+		params = {}
+
+		params_info.each do |param|
+			params[param[0].delete(':').to_sym] = resource.split('/')[param[1]]
+		end
+
+		params
+	end
+
+	def route_from_resource(resource)
+		resource.split('/')
+		route = ''
+
+		resource.each do |el|
+			if el[0] != ':'
+				route += "/#{el}"
+			else
+				route += "/:"
+			end
+		end
+
+		route
+	end
 
 	def terminal_print(data)
 		puts '-' * 40
