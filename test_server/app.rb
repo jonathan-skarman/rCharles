@@ -21,10 +21,10 @@ class App
     server.slim('test2')
   end
 
-  router.get('/testmapp/:id/testsida/:id2') do
+  router.get('/testmapp/:id/testsida/:id2') do |params|
     @id = params[:id]
     @id2 = params[:id2]
-    server.slim('testmapp/testsida')
+    server.slim('testmapp/testsida', params)
   end
 
   server.start

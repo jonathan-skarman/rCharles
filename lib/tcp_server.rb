@@ -23,10 +23,12 @@ class HTTPServer
 
 			route = route_from_resource(request.resource)
 			params_info, block = @router.route(request.method, route)
-			@params = params_definer(params_info, request.resource)
+			if !params_info.nil?
+				@params = params_definer(params_info, request.resource)
+			end
 
 			if !block.nil? # rubocop:disable Style/NegatedIfElseCondition
-				block.call # calls the block from the route defined in app.rb
+				block.call(@params) # calls the block from the route defined in app.rb
 			else # will never catch slim files here
 				file_read_respond(route)
 			end
@@ -37,23 +39,25 @@ class HTTPServer
 		fileRoute = @router.file_route(route_ish)
 		if fileRoute.nil? # rubocop:disable Style/ConditionalAssignment
 			body = nil
-		elsif binary_content?(resource.split('.').last)
+		elsif binary_content?(fileRoute.split('/').last.split('.').last)
 			body = File.binread(fileRoute)
 		else
 			body = File.read(fileRoute)
 		end
 
-		Response.new.send(body, route, @session)
+		Response.new.send(body, fileRoute, @session)
 	end
 
 	def html(resource)
 		file_read_respond(resource)
 	end
 
-	def slim(resource)
+	def slim(resource, params = {})
 		route = "views/#{resource}.slim"
-		body = Slim::Template.new('views/layout.slim').render { Slim::Template.new("views/#{resource}.slim").render }
-		Response.new.send(body, route, @session)
+    body = Slim::Template.new('views/layout.slim').render(Object.new, params) do
+      Slim::Template.new(route).render(Object.new, params)
+    end
+    Response.new.send(body, route, @session)
 	end
 
 	private
@@ -62,17 +66,17 @@ class HTTPServer
 		params = {}
 
 		params_info.each do |param|
-			params[param[0].delete(':').to_sym] = resource.split('/')[param[1]]
+			params[param[0].delete(':').to_sym] = resource.split('/')[param[1]].delete(':')
 		end
 
 		params
 	end
 
 	def route_from_resource(resource)
-		resource.split('/')
+		arr = resource.split('/')
 		route = ''
 
-		resource.each do |el|
+		arr.each do |el|
 			if el[0] != ':'
 				route += "/#{el}"
 			else
