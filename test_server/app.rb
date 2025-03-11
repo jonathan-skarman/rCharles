@@ -22,8 +22,6 @@ class App
   end
 
   router.get('/testmapp/:id/testsida/:id2') do |params|
-    @id = params[:id]
-    @id2 = params[:id2]
     server.slim('testmapp/testsida', params)
   end
 

@@ -21,8 +21,8 @@ class HTTPServer
 			terminal_print(data)
 			request = Request.new(data)
 
-			route = route_from_resource(request.resource)
-			params_info, block = @router.route(request.method, route)
+			#route = route_from_resource(request.resource)
+			params_info, block = @router.route(request.method, request.resource) #request.resource var route innan
 			if !params_info.nil?
 				@params = params_definer(params_info, request.resource)
 			end
@@ -53,10 +53,14 @@ class HTTPServer
 	end
 
 	def slim(resource, params = {})
+
+		context = SlimContext.new(params)
 		route = "views/#{resource}.slim"
-    body = Slim::Template.new('views/layout.slim').render(Object.new, params) do
-      Slim::Template.new(route).render(Object.new, params)
-    end
+
+		body = Slim::Template.new('views/layout.slim').render(context) do
+			Slim::Template.new(route).render(context)
+		end
+
     Response.new.send(body, route, @session)
 	end
 
@@ -72,20 +76,20 @@ class HTTPServer
 		params
 	end
 
-	def route_from_resource(resource)
-		arr = resource.split('/')
-		route = ''
-
-		arr.each do |el|
-			if el[0] != ':'
-				route += "/#{el}"
-			else
-				route += "/:"
-			end
-		end
-
-		route
-	end
+	#def route_from_resource(resource)
+	#	arr = resource.split('/')
+	#	route = ''
+#
+	#	arr.each do |el|
+	#		if el[0] != ':'
+	#			route += "/#{el}"
+	#		else
+	#			route += "/:"
+	#		end
+	#	end
+#
+	#	route
+	#end
 
 	def terminal_print(data)
 		puts '-' * 40
@@ -108,4 +112,14 @@ class HTTPServer
 
 		data
 	end
+end
+
+
+
+class SlimContext
+  attr_reader :params
+
+  def initialize(params)
+    @params = params
+  end
 end
