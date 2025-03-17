@@ -22,15 +22,12 @@ class HTTPServer
 			request = Request.new(data)
 
 			#route = route_from_resource(request.resource)
-			params_info, block = @router.route(request.method, request.resource) #request.resource var route innan
-			if !params_info.nil?
-				@params = params_definer(params_info, request.resource)
-			end
+			params, block = @router.route(request.method, request.resource) #request.resource var route innan
 
 			if !block.nil? # rubocop:disable Style/NegatedIfElseCondition
-				block.call(@params) # calls the block from the route defined in app.rb
+				block.call(params) # calls the block from the route defined in app.rb
 			else # will never catch slim files here
-				file_read_respond(route)
+				file_read_respond(request.resource)
 			end
 		end
 	end
@@ -53,6 +50,9 @@ class HTTPServer
 	end
 
 	def slim(resource, params = {})
+	p "{}" * 50
+	p "params in slim call: #{params}"
+	p "{}" * 50
 
 		context = SlimContext.new(params)
 		route = "views/#{resource}.slim"

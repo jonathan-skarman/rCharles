@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+
 
 # router klass för läsbarhet
 class Router
@@ -7,14 +7,25 @@ class Router
 	end
 
 	# takes method and resource and returns file adress for resource
-	def route(method, routee)
-		@routes.each do |route|
-			next unless routee.match?(route[1]) && (route[0] == method)
+	def route(method, route) # resource or route???
+		@routes.each do |routee|
+			next unless route.match?(routee[1]) && (routee[0] == method)
 
-			m = routee.match(route[1])
+			m = route.match(routee[1])
 			params = m.named_captures
-			p params
-			return params, route[3]
+
+			p '£' * 50
+			p "route: #{route}"
+			p "routee: #{routee}"
+			p "routee[1]: #{routee[1]}"
+			p "match?: #{route.match?(routee[1])}"
+			p "routee[0]: #{routee[0]}"
+			p "method: #{method}"
+			puts
+			p "params: #{params}"
+			p '£' * 50
+
+			return params, routee[3]
 		end
 		nil
 	end
@@ -42,58 +53,37 @@ class Router
 	end
 
 	#####
-	# def params_route(resource)
-	#	arr = resource.split('/')
-	#	params = []
-	#	route = ''
+	def params_route(resource)
+	i = 0
+  resource2 = "^"
+  while i < resource.length
+    if resource[i] == ':'
+      j = i + 1
+      var = ""
+      while resource[j] != '/' && j < resource.length
+        var += resource[j] unless resource[j].nil? || resource[j] == '/'
+        j += 1
+      end
+      resource2 << "(?<#{var}>\\w+)"
+      i = j - 1
+    else
+      resource2 << resource[i]
+    end
+    i += 1
+  end
+  resource2 << "(\/?)$"
 
-	#	i = 0
-	#	while i < arr.length
-	#		if arr[i][0] == ':'
-	#			params << [arr[i], i]
-	#			route += '/:'
-	#		else
-	#			route += "/#{arr[i]}"
-	#		end
-	#		i += 1
-	#	end
+	route = Regexp.new(resource2)
+	params_keys = resource.scan(/:(\w+)/).flatten.map(&:to_sym)
 
-	#	return params, route
-	# end
-	#####
-	def params_route(resource) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
-		i = 0
-		resource2 = "" # rubocop:disable Style/StringLiterals
-		while i < resource.length
-			if resource[i] == ':'
-				j = i
-				var = "" # rubocop:disable Style/StringLiterals
-				while resource[j] != '/' && j < resource.length
-					j += 1
-					var += resource[j] unless resource[j].nil? || resource[j] == '/'
-				end
-				resource2 += "(?<#{var}>\\w+)/"
-				i = j
-			else
-				resource2 += resource[i]
-				i += 1
-			end
-		end
-		# resource2 = resource.gsub(/(:\w+)/, '(\w+)')
-
-		route = Regexp.new(resource2)
-		params_keys = resource.scan(/:(\w+)/).flatten.map(&:to_sym)
-
-		p route
-		p params_keys
-
-		[params_keys, route]
-	end
+	[params_keys, route]
+end
 	#####
 
 	private
 
 	def add_route(method, route, params, block)
 		@routes << [method, route, params, block]
+		# p @routes
 	end
 end
