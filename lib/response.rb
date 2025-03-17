@@ -88,6 +88,12 @@ class Response # rubocop:disable Metrics/ClassLength
 			headers << "Content-Length: #{body.bytesize}"
 		end
 
+		if !$session.nil?
+			$session.each do |key, value|
+				headers << "Set-Cookie: #{key}=#{value}"
+			end
+		end
+
 		headers
 	end
 end

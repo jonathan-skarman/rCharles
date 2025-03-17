@@ -14,16 +14,16 @@ class Router
 			m = route.match(routee[1])
 			params = m.named_captures
 
-			p '£' * 50
-			p "route: #{route}"
-			p "routee: #{routee}"
-			p "routee[1]: #{routee[1]}"
-			p "match?: #{route.match?(routee[1])}"
-			p "routee[0]: #{routee[0]}"
-			p "method: #{method}"
-			puts
-			p "params: #{params}"
-			p '£' * 50
+			#p '£' * 50
+			#p "route: #{route}"
+			#p "routee: #{routee}"
+			#p "routee[1]: #{routee[1]}"
+			#p "match?: #{route.match?(routee[1])}"
+			#p "routee[0]: #{routee[0]}"
+			#p "method: #{method}"
+			#puts
+			#p "params: #{params}"
+			#p '£' * 50
 
 			return params, routee[3]
 		end

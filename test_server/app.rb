@@ -10,6 +10,8 @@ class App
   end
 
   router.get('/index') do
+    $session[:user_id] = 1
+    $session[:user_name] = 'John Doe'
     server.html('index')
   end
 

@@ -10,6 +10,7 @@ class HTTPServer
 	def initialize(port, router)
 		@port = port
 		@router = router
+		$session = {}
 	end
 
 	def start
@@ -50,10 +51,6 @@ class HTTPServer
 	end
 
 	def slim(resource, params = {})
-	p "{}" * 50
-	p "params in slim call: #{params}"
-	p "{}" * 50
-
 		context = SlimContext.new(params)
 		route = "views/#{resource}.slim"
 
