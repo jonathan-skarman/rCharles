@@ -10,8 +10,6 @@ class App
   end
 
   router.get('/index') do
-    $session[:user_id] = 1
-    $session[:user_name] = 'John Doe'
     server.html('index')
   end
 
@@ -25,6 +23,17 @@ class App
 
   router.get('/testmapp/:id/testsida/:id2') do |params|
     server.slim('testmapp/testsida', params)
+  end
+
+  router.get('/cookie1') do
+    $session[:cookie] = 'cookie1'
+    $session[:igen] = "igen"
+    server.html('index')
+  end
+
+  router.get('/cookie2') do
+    $session[:cookie] = 'cookie2'
+    server.html('index')
   end
 
   server.start

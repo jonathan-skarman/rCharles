@@ -22,6 +22,20 @@ class HTTPServer
 			terminal_print(data)
 			request = Request.new(data)
 
+			if !(request.headers[:Cookie].nil?)
+				if request.headers[:Cookie].include?('rCharles_Cookie')
+					request.headers[:Cookie].split(';').each do |cookie|
+						if cookie.include?('rCharles_Cookie')
+							# TODO: fixa någonting här
+							$session = cookie.split('=')[2].delete('\r')
+							p $session
+						end
+					end
+				end
+			else
+				$session = {}
+			end
+
 			#route = route_from_resource(request.resource)
 			params, block = @router.route(request.method, request.resource) #request.resource var route innan
 
