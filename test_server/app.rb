@@ -26,13 +26,13 @@ class App
   end
 
   router.get('/cookie1') do
-    $session[:cookie] = 'cookie1'
-    $session[:igen] = "igen"
+    $cookie[:cookie] = 'cookie1'
+    $cookie[:igen] = "igen"
     server.html('index')
   end
 
   router.get('/cookie2') do
-    $session[:cookie] = 'cookie2'
+    $cookie[:cookie] = 'cookie2'
     server.html('index')
   end
 

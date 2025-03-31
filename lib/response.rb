@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 # respons klass så HTTPserver klassen blir läsbar alls
-class Response # rubocop:disable Metrics/ClassLength
+class Response
 	def initialize; end # rubocop:disable Style/RedundantInitialize
 
-	def send(body, route, session) # rubocop:disable Naming/VariableNumber
-		if body.nil? # rubocop:disable Style/ConditionalAssignment
+	def send(body, route, session)
+		if body.nil?
 			status = '404'
 			body = '<h1>404 Not Found</h1>'
-			headers = headers('html', body)
+			route = 'html'
 		else
 			status = '200'
-			headers = headers(route, body)
 		end
+		headers = headers(route, body)
 		session_response(status, headers, body, session)
 	end
 
@@ -45,7 +45,6 @@ class Response # rubocop:disable Metrics/ClassLength
 		session.close
 	end
 
-	# returns an array with the important headers
 	def mime(key) # rubocop:disable Metrics/MethodLength
 		@mime = {
 			'html' => 'text/html',
@@ -82,24 +81,19 @@ class Response # rubocop:disable Metrics/ClassLength
 		headers << 'Server: Ruby HTTP Server'
 		headers << 'Connection: close'
 		headers << "Content-Type: #{mime(key)}"
+
 		if binary_content?(key)
 			headers << 'Content-Transfer-Encoding: binary'
 			headers << 'Accept-Ranges: bytes'
 			headers << "Content-Length: #{body.bytesize}"
 		end
 
-		if !$session.nil?
-			headers << "Set-Cookie: rCharles_Cookie=#{$session}"
-
-			#$session.each do |key, value|
-			#	headers << "Set-Cookie: #{key}=#{value}"
-			#end
-		end
+		headers << "Set-Cookie: rCharles_Cookie=#{$cookie}" unless $cookie.nil? # rubocop:disable Style/GlobalVars
 
 		headers
 	end
 end
 
-	def binary_content?(key)
-		%w[jpg jpeg png gif svg ico pdf zip tar mp3 wav mp4 avi woff woff2 ttf eot].include?(key)
-	end
+def binary_content?(key)
+	%w[jpg jpeg png gif svg ico pdf zip tar mp3 wav mp4 avi woff woff2 ttf eot].include?(key)
+end

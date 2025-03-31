@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require 'socket'
 require_relative 'request'
@@ -10,7 +10,6 @@ class HTTPServer
 	def initialize(port, router)
 		@port = port
 		@router = router
-		$session = {}
 	end
 
 	def start
@@ -18,23 +17,13 @@ class HTTPServer
 		puts "Listening on #{@port}"
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
+			$cookie = {}
 			data = parse_data(@session)
 			terminal_print(data)
 			request = Request.new(data)
 
-			if !(request.headers[:Cookie].nil?)
-				if request.headers[:Cookie].include?('rCharles_Cookie')
-					request.headers[:Cookie].split(';').each do |cookie|
-						if cookie.include?('rCharles_Cookie')
-							# TODO: fixa någonting här
-							$session = cookie.split('=')[2].delete('\r')
-							p $session
-						end
-					end
-				end
-			else
-				$session = {}
-			end
+			a = cookie_parser(request.headers[:Cookie])
+			$cookie = a if !a.nil?
 
 			#route = route_from_resource(request.resource)
 			params, block = @router.route(request.method, request.resource) #request.resource var route innan
@@ -77,7 +66,37 @@ class HTTPServer
 
 	private
 
-		def params_definer(params_info, resource)
+	def cookie_parser(cookie_header)
+		return nil if cookie_header.nil?
+
+		cookie_header = cookie_header[17..-3]
+
+		i = 0
+		hash = {}
+		while i < cookie_header.length
+
+			if cookie_header[i] == ':'
+				key_temp = ""
+				value_temp = ""
+				while cookie_header[i] != '=' && i < cookie_header.length
+					key_temp << cookie_header[i]
+					i += 1
+				end
+				key_temp = key_temp.delete(':').to_sym
+				i += 3 # skippar =>\"
+				while cookie_header[i] != "\"" && i < cookie_header.length
+					value_temp << cookie_header[i]
+					i += 1
+				end
+				hash [key_temp] = value_temp
+			end
+			i += 1
+		end
+
+		hash
+	end
+
+	def params_definer(params_info, resource)
 		params = {}
 
 		params_info.each do |param|
@@ -86,21 +105,6 @@ class HTTPServer
 
 		params
 	end
-
-	#def route_from_resource(resource)
-	#	arr = resource.split('/')
-	#	route = ''
-#
-	#	arr.each do |el|
-	#		if el[0] != ':'
-	#			route += "/#{el}"
-	#		else
-	#			route += "/:"
-	#		end
-	#	end
-#
-	#	route
-	#end
 
 	def terminal_print(data)
 		puts '-' * 40

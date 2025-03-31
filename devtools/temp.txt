@@ -1,27 +1,24 @@
-{:Host=>"localhost:4567\r", 
+{
+:Host=>"localhost
+:4567\r", 
 :Connection=>"keep-alive\r", 
-:"sec_ch-ua-platform"=>"\"Windows\"\r", 
-:User_Agent=>"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36\r", 
-:"sec_ch-ua"=>"\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\"\r", 
+:"sec_ch-ua"=>"\"Chromium\";v=\"134\", \"Not
+:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\"\r", 
 :"sec_ch-ua-mobile"=>"?0\r", 
-:Accept=>"image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8\r", 
-:"Sec_Fetch-Site"=>"same-origin\r", 
-:"Sec_Fetch-Mode"=>"no-cors\r", 
-:"Sec_Fetch-Dest"=>"image\r", 
-:Referer=>"http://localhost:4567/test\r", 
+:"sec_ch-ua-platform"=>"\"Windows\"\r", 
+:"Upgrade_Insecure-Requests"=>"1\r", 
+:User_Agent=>"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36\r", 
+:Accept=>"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\r", 
+:"Sec_Fetch-Site"=>"none\r", 
+:"Sec_Fetch-Mode"=>"navigate\r", 
+:"Sec_Fetch-User"=>"?1\r", 
+:"Sec_Fetch-Dest"=>"document\r", 
 :Accept_Encoding=>"gzip, deflate, br, zstd\r", 
 :Accept_Language=>"sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7\r", 
-
-:Cookie=>"rCharles_Cookie={:user_id=>1, :user_name=>\"John Doe\"}; wordpress_test_cookie=WP%20Cookie%20check; wp-settings-time-1=1711441637; wp-settings-1=libraryContent%3Dbrowse; <user_id>=<1>; <user_name>=<John Doe>; user_id=1; user_name=John Doe; rack.session=AXWsqmkO4Q-ao4TWmfqDi_buMupFDPQ8xrSUpen_u3fu4BTmg82KJKRXSA_yUM-zq61Em89pQHHLITEr9PvyI-PzKk8SMHYUsf8Cea-G6E41os8qE4e4O0iPinj8twJ1NAvdOuxEhD2ue7wjXwQiXik4W9Qy16odnmTZ2864NsYI2F8cYQ_sosAykoRUxextAMmq18jW3izCo2KS4pL2TArBqfEJ4WNyoigX8ZIXdLWL1h3HDvEz1hKRXkzjtJCgrMnyFMpr2Sm4-L5flyUhlM2snJWNc_75NKPCX9VH8Wgbsx6rstTdXj3jxaBHvNQJ6317F_6us-vx4MYwqVWOUSuCFMhZucnOgRCWmKmZe6f4rsbM78Op537cCjPKw-S2cTQTb-WNkJKpgaDNvKbDeDv53B1SbYaWEGCbtALdjssyNxsm8r9k7iiW1xJ6Xxiijg%3D%3D; rCharles_Cookie={}\r"}
-
-
-"rCharles_Cookie={:user_id=>1, :user_name=>\"John Doe\"}; 
-wordpress_test_cookie=WP%20Cookie%20check; 
-wp-settings-time-1=1711441637; 
-wp-settings-1=libraryContent%3Dbrowse; 
-<user_id>=<1>; 
-<user_name>=<John Doe>; 
-user_id=1; 
-user_name=John Doe; 
-rack.session=AXWsqmkO4Q-ao4TWmfqDi_buMupFDPQ8xrSUpen_u3fu4BTmg82KJKRXSA_yUM-zq61Em89pQHHLITEr9PvyI-PzKk8SMHYUsf8Cea-G6E41os8qE4e4O0iPinj8twJ1NAvdOuxEhD2ue7wjXwQiXik4W9Qy16odnmTZ2864NsYI2F8cYQ_sosAykoRUxextAMmq18jW3izCo2KS4pL2TArBqfEJ4WNyoigX8ZIXdLWL1h3HDvEz1hKRXkzjtJCgrMnyFMpr2Sm4-L5flyUhlM2snJWNc_75NKPCX9VH8Wgbsx6rstTdXj3jxaBHvNQJ6317F_6us-vx4MYwqVWOUSuCFMhZucnOgRCWmKmZe6f4rsbM78Op537cCjPKw-S2cTQTb-WNkJKpgaDNvKbDeDv53B1SbYaWEGCbtALdjssyNxsm8r9k7iiW1xJ6Xxiijg%3D%3D; 
-rCharles_Cookie={}\r"
+:Cookie=>"rCharles_Cookie=rCharles_Cookie={
+	:Host=>\"localhost
+	:4567\\r\", 
+:Connection=>\"keep-alive\\r\", 
+:Cache_Control=>\"max-age=0\\r\", 
+:\"sec_ch-ua\"=>\"\\\"Chromium\\\"\r"
+}
