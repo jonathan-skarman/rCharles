@@ -1,5 +1,3 @@
-
-
 # router klass för läsbarhet
 class Router
 	def initialize
@@ -41,33 +39,31 @@ class Router
 		add_route(:post, route, params, block)
 	end
 
-	#####
-	def params_route(resource)
-	i = 0
-  resource2 = "^"
-  while i < resource.length
-    if resource[i] == ':'
-      j = i + 1
-      var = ""
-      while resource[j] != '/' && j < resource.length
-        var += resource[j] unless resource[j].nil? || resource[j] == '/'
-        j += 1
-      end
-      resource2 << "(?<#{var}>\\w+)"
-      i = j - 1
-    else
-      resource2 << resource[i]
-    end
-    i += 1
-  end
-  resource2 << "(\/?)$"
+	def params_route(resource) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+		i = 0
+		resource2 = '^'
+		while i < resource.length
+			if resource[i] == ':'
+				j = i + 1
+				var = "" # rubocop:disable Style/StringLiterals
+				while resource[j] != '/' && j < resource.length
+					var += resource[j] unless resource[j].nil? || resource[j] == '/' # rubocop:disable Metrics/BlockNesting
+					j += 1
+				end
+				resource2 << "(?<#{var}>\\w+)"
+				i = j - 1
+			else
+				resource2 << resource[i]
+			end
+			i += 1
+		end
+		resource2 << "(\/?)$" # rubocop:disable Style/RedundantStringEscape
 
-	route = Regexp.new(resource2)
-	params_keys = resource.scan(/:(\w+)/).flatten.map(&:to_sym)
+		route = Regexp.new(resource2)
+		params_keys = resource.scan(/:(\w+)/).flatten.map(&:to_sym)
 
-	[params_keys, route]
-end
-	#####
+		[params_keys, route]
+	end
 
 	private
 
