@@ -25,15 +25,15 @@ class App
     server.slim('testmapp/testsida', params)
   end
 
-  router.get('/cookie1') do
-    $cookie[:cookie] = 'cookie1'
-    $cookie[:igen] = "igen"
-    server.html('index')
+  router.get('/cookie1') do |params, cookie|
+    cookie[:cookie] = 'cookie1'
+    cookie[:igen] = "igen"
+    server.html('index', cookie)
   end
 
-  router.get('/cookie2') do
-    $cookie[:cookie] = 'cookie2'
-    server.html('index')
+  router.get('/cookie2') do |params, cookie|
+    cookie[:cookie] = 'cookie2'
+    server.html('index', cookie)
   end
 
   server.start

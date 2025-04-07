@@ -17,26 +17,26 @@ class HTTPServer
 		puts "Listening on #{@port}"
 
 		while @session = server.accept # rubocop:disable Lint/AssignmentInCondition
-			$cookie = {}
+			cookie = {}
 			data = parse_data(@session)
 			terminal_print(data)
 			request = Request.new(data)
 
 			a = cookie_parser(request.headers[:Cookie])
-			$cookie = a if !a.nil?
+			cookie = a if !a.nil?
 
 			#route = route_from_resource(request.resource)
 			params, block = @router.route(request.method, request.resource) #request.resource var route innan
 
 			if !block.nil? # rubocop:disable Style/NegatedIfElseCondition
-				block.call(params) # calls the block from the route defined in app.rb
+				block.call(params, cookie) # calls the block from the route defined in app.rb
 			else # will never catch slim files here
-				file_read_respond(request.resource)
+				file_read_respond(request.resource, cookie)
 			end
 		end
 	end
 
-	def file_read_respond(route_ish)
+	def file_read_respond(route_ish, cookie = nil)
 		fileRoute = @router.file_route(route_ish)
 		if fileRoute.nil? # rubocop:disable Style/ConditionalAssignment
 			body = nil
@@ -46,14 +46,14 @@ class HTTPServer
 			body = File.read(fileRoute)
 		end
 
-		Response.new.send(body, fileRoute, @session)
+		Response.new.send(body, fileRoute, @session, cookie)
 	end
 
-	def html(resource)
-		file_read_respond(resource)
+	def html(resource, cookie = {})
+		file_read_respond(resource, cookie)
 	end
 
-	def slim(resource, params = {})
+	def slim(resource, params = {}, cookie = {})
 		context = SlimContext.new(params)
 		route = "views/#{resource}.slim"
 
@@ -61,7 +61,7 @@ class HTTPServer
 			Slim::Template.new(route).render(context)
 		end
 
-    Response.new.send(body, route, @session)
+    Response.new.send(body, route, @session, cookie)
 	end
 
 	private

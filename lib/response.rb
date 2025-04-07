@@ -4,7 +4,7 @@
 class Response
 	def initialize; end # rubocop:disable Style/RedundantInitialize
 
-	def send(body, route, session)
+	def send(body, route, session, cookie = nil)
 		if body.nil?
 			status = '404'
 			body = '<h1>404 Not Found</h1>'
@@ -12,7 +12,7 @@ class Response
 		else
 			status = '200'
 		end
-		headers = headers(route, body)
+		headers = headers(route, body, cookie)
 		session_response(status, headers, body, session)
 	end
 
@@ -75,7 +75,7 @@ class Response
 		@mime[key]
 	end
 
-	def headers(route, body)
+	def headers(route, body, cookie)
 		key = route.split('.').last
 		headers = []
 		headers << 'Server: Ruby HTTP Server'
@@ -88,7 +88,7 @@ class Response
 			headers << "Content-Length: #{body.bytesize}"
 		end
 
-		headers << "Set-Cookie: rCharles_Cookie=#{$cookie}" unless $cookie.nil? # rubocop:disable Style/GlobalVars
+		headers << "Set-Cookie: rCharles_Cookie=#{cookie}" unless cookie.nil?
 
 		headers
 	end
