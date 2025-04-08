@@ -4,8 +4,7 @@ class Router
 		@routes = []
 	end
 
-	# takes method and resource and returns file adress for resource
-	def route(method, route) # resource or route???
+	def route(method, route)
 		@routes.each do |routee|
 			next unless route.match?(routee[1]) && (routee[0] == method)
 
